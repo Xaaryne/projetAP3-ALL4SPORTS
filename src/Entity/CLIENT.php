@@ -40,9 +40,13 @@ class CLIENT
     #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: ENFANTS::class, orphanRemoval: true)]
     private Collection $fk_enfants;
 
+    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: CLIENTSPORT::class, orphanRemoval: true)]
+    private Collection $fk_clientsport;
+
     public function __construct()
     {
         $this->fk_enfants = new ArrayCollection();
+        $this->fk_clientsport = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -158,6 +162,36 @@ class CLIENT
             // set the owning side to null (unless already changed)
             if ($fkEnfant->getFkClient() === $this) {
                 $fkEnfant->setFkClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CLIENTSPORT>
+     */
+    public function getFkClientsport(): Collection
+    {
+        return $this->fk_clientsport;
+    }
+
+    public function addFkClientsport(CLIENTSPORT $fkClientsport): static
+    {
+        if (!$this->fk_clientsport->contains($fkClientsport)) {
+            $this->fk_clientsport->add($fkClientsport);
+            $fkClientsport->setFkClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkClientsport(CLIENTSPORT $fkClientsport): static
+    {
+        if ($this->fk_clientsport->removeElement($fkClientsport)) {
+            // set the owning side to null (unless already changed)
+            if ($fkClientsport->getFkClient() === $this) {
+                $fkClientsport->setFkClient(null);
             }
         }
 
