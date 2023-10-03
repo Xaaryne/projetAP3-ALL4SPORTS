@@ -16,6 +16,9 @@ class ENTREPOT
     #[ORM\Column(length: 55)]
     private ?string $nom = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_entrepot')]
+    private ?LIEUSTOCKAGE $fk_lieustockage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class ENTREPOT
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getFkLieustockage(): ?LIEUSTOCKAGE
+    {
+        return $this->fk_lieustockage;
+    }
+
+    public function setFkLieustockage(?LIEUSTOCKAGE $fk_lieustockage): static
+    {
+        $this->fk_lieustockage = $fk_lieustockage;
 
         return $this;
     }
