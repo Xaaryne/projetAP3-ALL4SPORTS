@@ -36,6 +36,9 @@ class PRODUIT
     #[ORM\ManyToOne(inversedBy: 'fk_produit')]
     private ?LIEUDISPONIBILITE $fk_lieudisponibilite = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
+    private ?LIEUSTOCKAGE $fk_lieustockage = null;
+
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
@@ -163,6 +166,18 @@ class PRODUIT
     public function setFkLieudisponibilite(?LIEUDISPONIBILITE $fk_lieudisponibilite): static
     {
         $this->fk_lieudisponibilite = $fk_lieudisponibilite;
+
+        return $this;
+    }
+
+    public function getFkLieustockage(): ?LIEUSTOCKAGE
+    {
+        return $this->fk_lieustockage;
+    }
+
+    public function setFkLieustockage(?LIEUSTOCKAGE $fk_lieustockage): static
+    {
+        $this->fk_lieustockage = $fk_lieustockage;
 
         return $this;
     }
