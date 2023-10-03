@@ -21,9 +21,13 @@ class LIEUDISPONIBILITE
     #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: PRODUIT::class)]
     private Collection $fk_produit;
 
+    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: MAGASIN::class)]
+    private Collection $fk_magasin;
+
     public function __construct()
     {
         $this->fk_produit = new ArrayCollection();
+        $this->fk_magasin = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,6 +71,36 @@ class LIEUDISPONIBILITE
             // set the owning side to null (unless already changed)
             if ($fkProduit->getFkLieudisponibilite() === $this) {
                 $fkProduit->setFkLieudisponibilite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MAGASIN>
+     */
+    public function getFkMagasin(): Collection
+    {
+        return $this->fk_magasin;
+    }
+
+    public function addFkMagasin(MAGASIN $fkMagasin): static
+    {
+        if (!$this->fk_magasin->contains($fkMagasin)) {
+            $this->fk_magasin->add($fkMagasin);
+            $fkMagasin->setFkLieudisponibilite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkMagasin(MAGASIN $fkMagasin): static
+    {
+        if ($this->fk_magasin->removeElement($fkMagasin)) {
+            // set the owning side to null (unless already changed)
+            if ($fkMagasin->getFkLieudisponibilite() === $this) {
+                $fkMagasin->setFkLieudisponibilite(null);
             }
         }
 
