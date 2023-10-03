@@ -21,6 +21,9 @@ class LISTESPORT
     #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: CLIENTSPORT::class)]
     private Collection $fk_clientsport;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_listesport')]
+    private ?PRODUIT $fk_produit = null;
+
     public function __construct()
     {
         $this->fk_clientsport = new ArrayCollection();
@@ -69,6 +72,18 @@ class LISTESPORT
                 $fkClientsport->setFkListesport(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFkProduit(): ?PRODUIT
+    {
+        return $this->fk_produit;
+    }
+
+    public function setFkProduit(?PRODUIT $fk_produit): static
+    {
+        $this->fk_produit = $fk_produit;
 
         return $this;
     }

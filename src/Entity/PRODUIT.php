@@ -30,9 +30,13 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
     private Collection $fk_panier;
 
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
+    private Collection $fk_listesport;
+
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
+        $this->fk_listesport = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +116,36 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($fkPanier->getFkProduit() === $this) {
                 $fkPanier->setFkProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LISTESPORT>
+     */
+    public function getFkListesport(): Collection
+    {
+        return $this->fk_listesport;
+    }
+
+    public function addFkListesport(LISTESPORT $fkListesport): static
+    {
+        if (!$this->fk_listesport->contains($fkListesport)) {
+            $this->fk_listesport->add($fkListesport);
+            $fkListesport->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkListesport(LISTESPORT $fkListesport): static
+    {
+        if ($this->fk_listesport->removeElement($fkListesport)) {
+            // set the owning side to null (unless already changed)
+            if ($fkListesport->getFkProduit() === $this) {
+                $fkListesport->setFkProduit(null);
             }
         }
 
