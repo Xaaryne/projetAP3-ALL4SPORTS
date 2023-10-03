@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PRODUITRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PRODUITRepository::class)]
@@ -24,6 +26,14 @@ class PRODUIT
 
     #[ORM\Column(length: 55)]
     private ?string $fournisseur = null;
+
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
+    private Collection $fk_panier;
+
+    public function __construct()
+    {
+        $this->fk_panier = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class PRODUIT
     public function setFournisseur(string $fournisseur): static
     {
         $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PANIER>
+     */
+    public function getFkPanier(): Collection
+    {
+        return $this->fk_panier;
+    }
+
+    public function addFkPanier(PANIER $fkPanier): static
+    {
+        if (!$this->fk_panier->contains($fkPanier)) {
+            $this->fk_panier->add($fkPanier);
+            $fkPanier->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkPanier(PANIER $fkPanier): static
+    {
+        if ($this->fk_panier->removeElement($fkPanier)) {
+            // set the owning side to null (unless already changed)
+            if ($fkPanier->getFkProduit() === $this) {
+                $fkPanier->setFkProduit(null);
+            }
+        }
 
         return $this;
     }
