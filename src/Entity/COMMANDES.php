@@ -28,9 +28,13 @@ class COMMANDES
     #[ORM\OneToMany(mappedBy: 'fk_commande', targetEntity: CLIENT::class)]
     private Collection $fk_client;
 
+    #[ORM\OneToMany(mappedBy: 'fk_commandes', targetEntity: PANIER::class, orphanRemoval: true)]
+    private Collection $fk_panier;
+
     public function __construct()
     {
         $this->fk_client = new ArrayCollection();
+        $this->fk_panier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +102,36 @@ class COMMANDES
             // set the owning side to null (unless already changed)
             if ($fkClient->getFkCommande() === $this) {
                 $fkClient->setFkCommande(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PANIER>
+     */
+    public function getFkPanier(): Collection
+    {
+        return $this->fk_panier;
+    }
+
+    public function addFkPanier(PANIER $fkPanier): static
+    {
+        if (!$this->fk_panier->contains($fkPanier)) {
+            $this->fk_panier->add($fkPanier);
+            $fkPanier->setFkCommandes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkPanier(PANIER $fkPanier): static
+    {
+        if ($this->fk_panier->removeElement($fkPanier)) {
+            // set the owning side to null (unless already changed)
+            if ($fkPanier->getFkCommandes() === $this) {
+                $fkPanier->setFkCommandes(null);
             }
         }
 
