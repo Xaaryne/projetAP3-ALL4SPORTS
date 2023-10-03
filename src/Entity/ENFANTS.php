@@ -16,6 +16,10 @@ class ENFANTS
     #[ORM\Column]
     private ?int $age = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_enfants')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CLIENT $fk_client = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class ENFANTS
     public function setAge(int $age): static
     {
         $this->age = $age;
+
+        return $this;
+    }
+
+    public function getFkClient(): ?CLIENT
+    {
+        return $this->fk_client;
+    }
+
+    public function setFkClient(?CLIENT $fk_client): static
+    {
+        $this->fk_client = $fk_client;
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CLIENTRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,14 @@ class CLIENT
 
     #[ORM\Column(nullable: true)]
     private ?int $nb_enfant = null;
+
+    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: ENFANTS::class, orphanRemoval: true)]
+    private Collection $fk_enfants;
+
+    public function __construct()
+    {
+        $this->fk_enfants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +130,36 @@ class CLIENT
     public function setNbEnfant(?int $nb_enfant): static
     {
         $this->nb_enfant = $nb_enfant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ENFANTS>
+     */
+    public function getFkEnfants(): Collection
+    {
+        return $this->fk_enfants;
+    }
+
+    public function addFkEnfant(ENFANTS $fkEnfant): static
+    {
+        if (!$this->fk_enfants->contains($fkEnfant)) {
+            $this->fk_enfants->add($fkEnfant);
+            $fkEnfant->setFkClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkEnfant(ENFANTS $fkEnfant): static
+    {
+        if ($this->fk_enfants->removeElement($fkEnfant)) {
+            // set the owning side to null (unless already changed)
+            if ($fkEnfant->getFkClient() === $this) {
+                $fkEnfant->setFkClient(null);
+            }
+        }
 
         return $this;
     }
