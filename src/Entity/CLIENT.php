@@ -43,6 +43,9 @@ class CLIENT
     #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: CLIENTSPORT::class, orphanRemoval: true)]
     private Collection $fk_clientsport;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_client')]
+    private ?COMMANDES $fk_commande = null;
+
     public function __construct()
     {
         $this->fk_enfants = new ArrayCollection();
@@ -194,6 +197,18 @@ class CLIENT
                 $fkClientsport->setFkClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFkCommande(): ?COMMANDES
+    {
+        return $this->fk_commande;
+    }
+
+    public function setFkCommande(?COMMANDES $fk_commande): static
+    {
+        $this->fk_commande = $fk_commande;
 
         return $this;
     }
