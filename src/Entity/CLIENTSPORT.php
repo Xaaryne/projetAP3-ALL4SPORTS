@@ -17,6 +17,10 @@ class CLIENTSPORT
     #[ORM\JoinColumn(nullable: false)]
     private ?CLIENT $fk_client = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_clientsport')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?LISTESPORT $fk_listesport = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +34,18 @@ class CLIENTSPORT
     public function setFkClient(?CLIENT $fk_client): static
     {
         $this->fk_client = $fk_client;
+
+        return $this;
+    }
+
+    public function getFkListesport(): ?LISTESPORT
+    {
+        return $this->fk_listesport;
+    }
+
+    public function setFkListesport(?LISTESPORT $fk_listesport): static
+    {
+        $this->fk_listesport = $fk_listesport;
 
         return $this;
     }
