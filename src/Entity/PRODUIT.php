@@ -33,12 +33,6 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
     private Collection $fk_listesport;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
-    private ?LIEUDISPONIBILITE $fk_lieudisponibilite = null;
-
-    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
-    private ?LIEUSTOCKAGE $fk_lieustockage = null;
-
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();

@@ -18,8 +18,6 @@ class LIEUSTOCKAGE
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieustockage', targetEntity: PRODUIT::class)]
-    private Collection $fk_produit;
 
     #[ORM\OneToMany(mappedBy: 'fk_lieustockage', targetEntity: ENTREPOT::class)]
     private Collection $fk_entrepot;
