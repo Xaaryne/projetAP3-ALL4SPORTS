@@ -22,6 +22,9 @@ class LIEUSTOCKAGE
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?PRODUIT $fk_produit = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_lieustockage')]
+    private ?ENTREPOT $fk_entrepot = null;
+
     public function __construct()
     {
         $this->fk_produit = new ArrayCollection();
@@ -108,6 +111,13 @@ class LIEUSTOCKAGE
     public function setFkProduit(?PRODUIT $fk_produit): static
     {
         $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function setFkEntrepot(?ENTREPOT $fk_entrepot): static
+    {
+        $this->fk_entrepot = $fk_entrepot;
 
         return $this;
     }

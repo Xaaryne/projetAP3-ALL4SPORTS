@@ -24,6 +24,9 @@ class LIEUDISPONIBILITE
     #[ORM\JoinColumn(nullable: false)]
     private ?PRODUIT $fk_produit = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
+    private ?MAGASIN $fk_magasin = null;
+
     public function __construct()
     {
         $this->fk_produit = new ArrayCollection();
@@ -110,6 +113,13 @@ class LIEUDISPONIBILITE
     public function setFkProduit(PRODUIT $fk_produit): static
     {
         $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function setFkMagasin(?MAGASIN $fk_magasin): static
+    {
+        $this->fk_magasin = $fk_magasin;
 
         return $this;
     }
