@@ -19,9 +19,6 @@ class LIEUSTOCKAGE
     private ?int $quantite = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieustockage', targetEntity: ENTREPOT::class)]
-    private Collection $fk_entrepot;
-
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?PRODUIT $fk_produit = null;
 

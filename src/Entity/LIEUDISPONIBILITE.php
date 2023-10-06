@@ -20,9 +20,6 @@ class LIEUDISPONIBILITE
 
 
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: MAGASIN::class)]
-    private Collection $fk_magasin;
-
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?PRODUIT $fk_produit = null;

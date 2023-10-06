@@ -16,8 +16,6 @@ class ENTREPOT
     #[ORM\Column(length: 55)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_entrepot')]
-    private ?LIEUSTOCKAGE $fk_lieustockage = null;
 
     public function getId(): ?int
     {

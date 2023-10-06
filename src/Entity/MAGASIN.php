@@ -16,8 +16,7 @@ class MAGASIN
     #[ORM\Column(length: 55)]
     private ?string $nom = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_magasin')]
-    private ?LIEUDISPONIBILITE $fk_lieudisponibilite = null;
+
 
     public function getId(): ?int
     {
