@@ -22,6 +22,9 @@ class LIEUSTOCKAGE
     #[ORM\OneToMany(mappedBy: 'fk_lieustockage', targetEntity: ENTREPOT::class)]
     private Collection $fk_entrepot;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?PRODUIT $fk_produit = null;
+
     public function __construct()
     {
         $this->fk_produit = new ArrayCollection();
@@ -101,6 +104,13 @@ class LIEUSTOCKAGE
                 $fkEntrepot->setFkLieustockage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setFkProduit(?PRODUIT $fk_produit): static
+    {
+        $this->fk_produit = $fk_produit;
 
         return $this;
     }
