@@ -43,8 +43,7 @@ class CLIENT
     #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: CLIENTSPORT::class, orphanRemoval: true)]
     private Collection $fk_clientsport;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_client')]
-    private ?COMMANDES $fk_commande = null;
+
 
     public function __construct()
     {

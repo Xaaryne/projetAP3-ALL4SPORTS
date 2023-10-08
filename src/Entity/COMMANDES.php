@@ -25,8 +25,7 @@ class COMMANDES
     #[ORM\Column(length: 55)]
     private ?string $etat = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_commande', targetEntity: CLIENT::class)]
-    private Collection $fk_client;
+
 
     #[ORM\OneToMany(mappedBy: 'fk_commandes', targetEntity: PANIER::class, orphanRemoval: true)]
     private Collection $fk_panier;
