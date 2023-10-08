@@ -33,6 +33,9 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
     private Collection $fk_listesport;
 
+    #[ORM\Column(length: 100)]
+    private ?string $nomproduit = null;
+
 
     public function __construct()
     {
@@ -173,6 +176,18 @@ class PRODUIT
     public function setFkLieustockage(?LIEUSTOCKAGE $fk_lieustockage): static
     {
         $this->fk_lieustockage = $fk_lieustockage;
+
+        return $this;
+    }
+
+    public function getNomproduit(): ?string
+    {
+        return $this->nomproduit;
+    }
+
+    public function setNomproduit(string $nomproduit): static
+    {
+        $this->nomproduit = $nomproduit;
 
         return $this;
     }
