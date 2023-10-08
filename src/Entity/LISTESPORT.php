@@ -21,8 +21,6 @@ class LISTESPORT
     #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: CLIENTSPORT::class)]
     private Collection $fk_clientsport;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_listesport')]
-    private ?PRODUIT $fk_produit = null;
 
     public function __construct()
     {
