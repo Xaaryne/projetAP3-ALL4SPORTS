@@ -30,6 +30,9 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
     private Collection $fk_panier;
 
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
+    private Collection $fk_listesport;
+
 
     public function __construct()
     {
