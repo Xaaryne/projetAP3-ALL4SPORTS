@@ -30,6 +30,10 @@ class COMMANDES
     #[ORM\OneToMany(mappedBy: 'fk_commandes', targetEntity: PANIER::class, orphanRemoval: true)]
     private Collection $fk_panier;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CLIENT $fk_client = null;
+
     public function __construct()
     {
         $this->fk_client = new ArrayCollection();
@@ -133,6 +137,13 @@ class COMMANDES
                 $fkPanier->setFkCommandes(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setFkClient(?CLIENT $fk_client): static
+    {
+        $this->fk_client = $fk_client;
 
         return $this;
     }
