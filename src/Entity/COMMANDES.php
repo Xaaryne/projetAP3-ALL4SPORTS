@@ -19,8 +19,6 @@ class COMMANDES
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column]
-    private ?float $prix = null;
 
     #[ORM\Column(length: 55)]
     private ?string $etat = null;
@@ -33,6 +31,9 @@ class COMMANDES
     #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CLIENT $fk_client = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $prixtotal = null;
 
     public function __construct()
     {
@@ -57,17 +58,6 @@ class COMMANDES
         return $this;
     }
 
-    public function getPrix(): ?float
-    {
-        return $this->prix;
-    }
-
-    public function setPrix(float $prix): static
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
 
     public function getEtat(): ?string
     {
@@ -144,6 +134,18 @@ class COMMANDES
     public function setFkClient(?CLIENT $fk_client): static
     {
         $this->fk_client = $fk_client;
+
+        return $this;
+    }
+
+    public function getPrixtotal(): ?float
+    {
+        return $this->prixtotal;
+    }
+
+    public function setPrixtotal(?float $prixtotal): static
+    {
+        $this->prixtotal = $prixtotal;
 
         return $this;
     }
