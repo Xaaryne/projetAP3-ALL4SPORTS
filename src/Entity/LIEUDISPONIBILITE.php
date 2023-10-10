@@ -18,11 +18,14 @@ class LIEUDISPONIBILITE
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: PRODUIT::class)]
-    private Collection $fk_produit;
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: MAGASIN::class)]
-    private Collection $fk_magasin;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?PRODUIT $fk_produit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
+    private ?MAGASIN $fk_magasin = null;
 
     public function __construct()
     {
@@ -103,6 +106,20 @@ class LIEUDISPONIBILITE
                 $fkMagasin->setFkLieudisponibilite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setFkProduit(PRODUIT $fk_produit): static
+    {
+        $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function setFkMagasin(?MAGASIN $fk_magasin): static
+    {
+        $this->fk_magasin = $fk_magasin;
 
         return $this;
     }
