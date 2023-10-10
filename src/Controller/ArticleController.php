@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\PRODUIT;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,9 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
-    public function index(): Response
+    public function index(PRODUIT $produit): Response
     {
         return $this->render('article/index.html.twig', [
+            "article" => $produit,
             'controller_name' => 'ArticleController',
         ]);
     }
