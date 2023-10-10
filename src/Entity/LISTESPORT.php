@@ -24,6 +24,7 @@ class LISTESPORT
     #[ORM\ManyToOne(inversedBy: 'fk_listesport')]
     private ?PRODUIT $fk_produit = null;
 
+
     public function __construct()
     {
         $this->fk_clientsport = new ArrayCollection();
