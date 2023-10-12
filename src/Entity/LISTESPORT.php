@@ -21,12 +21,16 @@ class LISTESPORT
     #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: CLIENTSPORT::class)]
     private Collection $fk_clientsport;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_listesport')]
-    private ?PRODUIT $fk_produit = null;
+    #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: PRODUIT::class)]
+    private Collection $fk_produit;
+
+
+
 
     public function __construct()
     {
         $this->fk_clientsport = new ArrayCollection();
+        $this->fk_produit = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,6 +88,28 @@ class LISTESPORT
     public function setFkProduit(?PRODUIT $fk_produit): static
     {
         $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function addFkProduit(PRODUIT $fkProduit): static
+    {
+        if (!$this->fk_produit->contains($fkProduit)) {
+            $this->fk_produit->add($fkProduit);
+            $fkProduit->setFkListesport($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkProduit(PRODUIT $fkProduit): static
+    {
+        if ($this->fk_produit->removeElement($fkProduit)) {
+            // set the owning side to null (unless already changed)
+            if ($fkProduit->getFkListesport() === $this) {
+                $fkProduit->setFkListesport(null);
+            }
+        }
 
         return $this;
     }

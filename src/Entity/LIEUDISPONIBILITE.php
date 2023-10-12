@@ -18,15 +18,18 @@ class LIEUDISPONIBILITE
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: PRODUIT::class)]
-    private Collection $fk_produit;
 
-    #[ORM\OneToMany(mappedBy: 'fk_lieudisponibilite', targetEntity: MAGASIN::class)]
-    private Collection $fk_magasin;
+
+
+
+    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
+    private ?MAGASIN $fk_magasin = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
+    private ?PRODUIT $fk_produit = null;
 
     public function __construct()
     {
-        $this->fk_produit = new ArrayCollection();
         $this->fk_magasin = new ArrayCollection();
     }
 
@@ -50,32 +53,7 @@ class LIEUDISPONIBILITE
     /**
      * @return Collection<int, PRODUIT>
      */
-    public function getFkProduit(): Collection
-    {
-        return $this->fk_produit;
-    }
 
-    public function addFkProduit(PRODUIT $fkProduit): static
-    {
-        if (!$this->fk_produit->contains($fkProduit)) {
-            $this->fk_produit->add($fkProduit);
-            $fkProduit->setFkLieudisponibilite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkProduit(PRODUIT $fkProduit): static
-    {
-        if ($this->fk_produit->removeElement($fkProduit)) {
-            // set the owning side to null (unless already changed)
-            if ($fkProduit->getFkLieudisponibilite() === $this) {
-                $fkProduit->setFkLieudisponibilite(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, MAGASIN>
@@ -105,5 +83,24 @@ class LIEUDISPONIBILITE
         }
 
         return $this;
+    }
+
+    public function setFkProduit(PRODUIT $fk_produit): static
+    {
+        $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function setFkMagasin(?MAGASIN $fk_magasin): static
+    {
+        $this->fk_magasin = $fk_magasin;
+
+        return $this;
+    }
+
+    public function getFkProduit(): ?PRODUIT
+    {
+        return $this->fk_produit;
     }
 }

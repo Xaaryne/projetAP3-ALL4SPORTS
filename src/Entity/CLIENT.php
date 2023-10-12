@@ -43,13 +43,16 @@ class CLIENT
     #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: CLIENTSPORT::class, orphanRemoval: true)]
     private Collection $fk_clientsport;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_client')]
-    private ?COMMANDES $fk_commande = null;
+    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: COMMANDES::class)]
+    private Collection $fk_commandes;
+
+
 
     public function __construct()
     {
         $this->fk_enfants = new ArrayCollection();
         $this->fk_clientsport = new ArrayCollection();
+        $this->fk_commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +212,36 @@ class CLIENT
     public function setFkCommande(?COMMANDES $fk_commande): static
     {
         $this->fk_commande = $fk_commande;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, COMMANDES>
+     */
+    public function getFkCommandes(): Collection
+    {
+        return $this->fk_commandes;
+    }
+
+    public function addFkCommande(COMMANDES $fkCommande): static
+    {
+        if (!$this->fk_commandes->contains($fkCommande)) {
+            $this->fk_commandes->add($fkCommande);
+            $fkCommande->setFkClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkCommande(COMMANDES $fkCommande): static
+    {
+        if ($this->fk_commandes->removeElement($fkCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($fkCommande->getFkClient() === $this) {
+                $fkCommande->setFkClient(null);
+            }
+        }
 
         return $this;
     }
