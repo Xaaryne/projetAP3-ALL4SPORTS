@@ -19,11 +19,13 @@ class LIEUSTOCKAGE
     private ?int $quantite = null;
 
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?PRODUIT $fk_produit = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'fk_lieustockage')]
     private ?ENTREPOT $fk_entrepot = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_lieustockage')]
+    private ?PRODUIT $fk_produit = null;
 
     public function __construct()
     {

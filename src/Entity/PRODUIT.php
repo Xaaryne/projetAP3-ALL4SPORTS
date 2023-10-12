@@ -30,17 +30,27 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
     private Collection $fk_panier;
 
-    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
-    private Collection $fk_listesport;
+
 
     #[ORM\Column(length: 100)]
     private ?string $nomproduit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
+    private ?LISTESPORT $fk_listesport = null;
+
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
+    private Collection $fk_lieudisponibilite;
+
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUSTOCKAGE::class)]
+    private Collection $fk_lieustockage;
 
 
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
         $this->fk_listesport = new ArrayCollection();
+        $this->fk_lieudisponibilite = new ArrayCollection();
+        $this->fk_lieustockage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,6 +198,57 @@ class PRODUIT
     public function setNomproduit(string $nomproduit): static
     {
         $this->nomproduit = $nomproduit;
+
+        return $this;
+    }
+
+    public function setFkListesport(?LISTESPORT $fk_listesport): static
+    {
+        $this->fk_listesport = $fk_listesport;
+
+        return $this;
+    }
+
+    public function addFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
+    {
+        if (!$this->fk_lieudisponibilite->contains($fkLieudisponibilite)) {
+            $this->fk_lieudisponibilite->add($fkLieudisponibilite);
+            $fkLieudisponibilite->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
+    {
+        if ($this->fk_lieudisponibilite->removeElement($fkLieudisponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($fkLieudisponibilite->getFkProduit() === $this) {
+                $fkLieudisponibilite->setFkProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
+    {
+        if (!$this->fk_lieustockage->contains($fkLieustockage)) {
+            $this->fk_lieustockage->add($fkLieustockage);
+            $fkLieustockage->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
+    {
+        if ($this->fk_lieustockage->removeElement($fkLieustockage)) {
+            // set the owning side to null (unless already changed)
+            if ($fkLieustockage->getFkProduit() === $this) {
+                $fkLieustockage->setFkProduit(null);
+            }
+        }
 
         return $this;
     }

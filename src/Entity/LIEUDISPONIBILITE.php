@@ -20,16 +20,16 @@ class LIEUDISPONIBILITE
 
 
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?PRODUIT $fk_produit = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
     private ?MAGASIN $fk_magasin = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
+    private ?PRODUIT $fk_produit = null;
+
     public function __construct()
     {
-        $this->fk_produit = new ArrayCollection();
         $this->fk_magasin = new ArrayCollection();
     }
 
@@ -53,32 +53,7 @@ class LIEUDISPONIBILITE
     /**
      * @return Collection<int, PRODUIT>
      */
-    public function getFkProduit(): Collection
-    {
-        return $this->fk_produit;
-    }
 
-    public function addFkProduit(PRODUIT $fkProduit): static
-    {
-        if (!$this->fk_produit->contains($fkProduit)) {
-            $this->fk_produit->add($fkProduit);
-            $fkProduit->setFkLieudisponibilite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkProduit(PRODUIT $fkProduit): static
-    {
-        if ($this->fk_produit->removeElement($fkProduit)) {
-            // set the owning side to null (unless already changed)
-            if ($fkProduit->getFkLieudisponibilite() === $this) {
-                $fkProduit->setFkLieudisponibilite(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, MAGASIN>
@@ -122,5 +97,10 @@ class LIEUDISPONIBILITE
         $this->fk_magasin = $fk_magasin;
 
         return $this;
+    }
+
+    public function getFkProduit(): ?PRODUIT
+    {
+        return $this->fk_produit;
     }
 }
