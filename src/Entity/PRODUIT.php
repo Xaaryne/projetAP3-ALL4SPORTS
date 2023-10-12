@@ -30,11 +30,13 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
     private Collection $fk_panier;
 
-    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LISTESPORT::class)]
-    private Collection $fk_listesport;
+
 
     #[ORM\Column(length: 100)]
     private ?string $nomproduit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
+    private ?LISTESPORT $fk_listesport = null;
 
 
     public function __construct()
@@ -188,6 +190,13 @@ class PRODUIT
     public function setNomproduit(string $nomproduit): static
     {
         $this->nomproduit = $nomproduit;
+
+        return $this;
+    }
+
+    public function setFkListesport(?LISTESPORT $fk_listesport): static
+    {
+        $this->fk_listesport = $fk_listesport;
 
         return $this;
     }
