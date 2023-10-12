@@ -41,12 +41,16 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
     private Collection $fk_lieudisponibilite;
 
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUSTOCKAGE::class)]
+    private Collection $fk_lieustockage;
+
 
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
         $this->fk_listesport = new ArrayCollection();
         $this->fk_lieudisponibilite = new ArrayCollection();
+        $this->fk_lieustockage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,6 +225,28 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($fkLieudisponibilite->getFkProduit() === $this) {
                 $fkLieudisponibilite->setFkProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
+    {
+        if (!$this->fk_lieustockage->contains($fkLieustockage)) {
+            $this->fk_lieustockage->add($fkLieustockage);
+            $fkLieustockage->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
+    {
+        if ($this->fk_lieustockage->removeElement($fkLieustockage)) {
+            // set the owning side to null (unless already changed)
+            if ($fkLieustockage->getFkProduit() === $this) {
+                $fkLieustockage->setFkProduit(null);
             }
         }
 
