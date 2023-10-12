@@ -38,11 +38,15 @@ class PRODUIT
     #[ORM\ManyToOne(inversedBy: 'fk_produit')]
     private ?LISTESPORT $fk_listesport = null;
 
+    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
+    private Collection $fk_lieudisponibilite;
+
 
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
         $this->fk_listesport = new ArrayCollection();
+        $this->fk_lieudisponibilite = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,28 @@ class PRODUIT
     public function setFkListesport(?LISTESPORT $fk_listesport): static
     {
         $this->fk_listesport = $fk_listesport;
+
+        return $this;
+    }
+
+    public function addFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
+    {
+        if (!$this->fk_lieudisponibilite->contains($fkLieudisponibilite)) {
+            $this->fk_lieudisponibilite->add($fkLieudisponibilite);
+            $fkLieudisponibilite->setFkProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
+    {
+        if ($this->fk_lieudisponibilite->removeElement($fkLieudisponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($fkLieudisponibilite->getFkProduit() === $this) {
+                $fkLieudisponibilite->setFkProduit(null);
+            }
+        }
 
         return $this;
     }
