@@ -148,3 +148,9 @@ en pixels inférieur ou égale à 700 pixels, alors...*/
         width: 80%;
     }
 }
+
+.text-article {
+    float: initial;
+    display: inline-block;
+    vertical-align: top;
+}
