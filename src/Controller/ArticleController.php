@@ -12,9 +12,9 @@ class ArticleController extends AbstractController
     #[Route('/article', name: 'app_article')]
     public function index(PRODUITRepository $produitRepositary): Response
     {
-        $produit = $produitRepositary->find($_GET['id']);
+        $produit = $produitRepositary->findAll();
         return $this->render('article/index.html.twig', [
-            "article" => $produit,
+            "produit" => $produit,
             'controller_name' => 'ArticleController',
         ]);
     }
