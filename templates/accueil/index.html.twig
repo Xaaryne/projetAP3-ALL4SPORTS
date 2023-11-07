@@ -18,10 +18,9 @@
         {% endif %}
     {% endfor %}
     <a>
-    <a href="/categorie" hover="Cyclisme">
-    <img src="{{ asset('/Velo_de_route.jpg') }}" width="300" height="300" alt="Velo">
-    <img src="{{ asset('/Musculation.jpg') }}" width="300" height="300" alt="Velo">
-    <a>
+    {% for PHOTOSACCUEIL in photosaccueil %}
+        <img src={{PHOTOSACCUEIL.photos}} width="300" height="300">
+    {% endfor %}
     <p>Catégorie Cyclisme</p>
     </div>
 {% endblock %}
