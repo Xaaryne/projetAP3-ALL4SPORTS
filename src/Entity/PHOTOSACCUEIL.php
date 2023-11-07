@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\PHOTOSACCUEILRepository;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: PHOTOSACCUEILRepository::class)]
+class PHOTOSACCUEIL
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photos = null;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getPhotos(): ?string
+    {
+        return $this->photos;
+    }
+
+    public function setPhotos(?string $photos): static
+    {
+        $this->photos = $photos;
+
+        return $this;
+    }
+}

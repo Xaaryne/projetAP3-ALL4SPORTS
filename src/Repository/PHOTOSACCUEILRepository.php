@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\PHOTOS;
+use App\Entity\PHOTOSACCUEIL;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<PHOTOS>
+ * @extends ServiceEntityRepository<PHOTOSACCUEIL>
  *
- * @method PHOTOS|null find($id, $lockMode = null, $lockVersion = null)
- * @method PHOTOS|null findOneBy(array $criteria, array $orderBy = null)
- * @method PHOTOS[]    findAll()
- * @method PHOTOS[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PHOTOSACCUEIL|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PHOTOSACCUEIL|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PHOTOSACCUEIL[]    findAll()
+ * @method PHOTOSACCUEIL[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PHOTOSRepository extends ServiceEntityRepository
+class PHOTOSACCUEILRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PHOTOS::class);
+        parent::__construct($registry, PHOTOSACCUEIL::class);
     }
 
 //    /**
-//     * @return PHOTOS[] Returns an array of PHOTOS objects
+//     * @return PHOTOSACCUEIL[] Returns an array of PHOTOSACCUEIL objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class PHOTOSRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?PHOTOS
+//    public function findOneBySomeField($value): ?PHOTOSACCUEIL
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')
