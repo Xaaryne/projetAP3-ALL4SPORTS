@@ -11,6 +11,14 @@
 <div class="example-wrapper">
     <h1>Bienvenue sur ALL4SPORTS !</h1>
     <a href="/categorie" hover="Cyclisme">
+    {% for LISTESPORT in listesport %}
+        {{ LISTESPORT.sport }}
+        {% if loop.index is divisible by(3) and not loop.last %}
+            <br>
+        {% endif %}
+    {% endfor %}
+    <a>
+    <a href="/categorie" hover="Cyclisme">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/V%C3%A9lo_de_route.jpg/1200px-V%C3%A9lo_de_route.jpg" width="300" height="300" alt="Catégorie Cyclisme">
     <a>
     <p>Catégorie Cyclisme</p>
