@@ -44,6 +44,9 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUSTOCKAGE::class)]
     private Collection $fk_lieustockage;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
+    private Collection $photos;
+
 
     public function __construct()
     {
@@ -51,6 +54,7 @@ class PRODUIT
         $this->fk_listesport = new ArrayCollection();
         $this->fk_lieudisponibilite = new ArrayCollection();
         $this->fk_lieustockage = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +251,36 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($fkLieustockage->getFkProduit() === $this) {
                 $fkLieustockage->setFkProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PHOTOSPRODUIT>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(PHOTOSPRODUIT $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(PHOTOSPRODUIT $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getProduit() === $this) {
+                $photo->setProduit(null);
             }
         }
 
