@@ -5,14 +5,27 @@
 <head>
     <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
 </head>
-    <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="400" height="400">
-    <h1>Liste des produit</h1>
-    <ul>
-        {% for PRODUIT in produit %}
-            <li><br>{{ PRODUIT.nomproduit }} Pour un prix de :{{ (PRODUIT.prix * 1.2) | round(2) }} €
-            <br> {{PRODUIT.description}} 
-            <br>Référence:{{PRODUIT.reference}}
-            <br>Fournisseur:{{PRODUIT.fournisseur}}</li>
-        {% endfor %}
-    </ul>
+<body>
+    <div class="image-article" style="float:left">
+        <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="400" height="400">
+    </div>
+    <div class="text-article" style="float:left">
+        <h1>Nom_Article</h1>
+        <h3>Description</h3>
+        </div>
+    <div class="text-commander" style="float:right">
+    <table>
+        <thead>
+            <tr>
+                <th>Commander</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th><button>Ajouter au panier</button></th>
+        </tbody>
+    </table>
+    </div>
+</body>
+
 {% endblock %}
