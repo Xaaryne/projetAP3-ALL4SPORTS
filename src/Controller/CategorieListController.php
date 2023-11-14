@@ -8,11 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieListController extends AbstractController
 {
-    #[Route('/categorieList', name: 'app_categorieList')]
-    public function index(): Response
+    #[Route('/categorieList/{id}', name: 'app_categorieList')]
+    public function index(int $id): Response
     {
+
         return $this->render('categorieList/index.html.twig', [
             'controller_name' => 'CategorieListController',
+            'id' => $id
+
+ 
         ]);
     }
 }

@@ -11,7 +11,7 @@
 <div class="example-wrapper">
     <h1>Bienvenue sur ALL4SPORTS !</h1>
     {% for PHOTOSACCUEIL in photosaccueil %}
-    <a href="{{path('app_categorieList',{id:PHOTOSACCUEIL.listesport})}}" hover="Cyclisme">
+    <a href="{{path('app_categorieList',{id:PHOTOSACCUEIL.listesport.id})}}" >
         <img src={{PHOTOSACCUEIL.photos}} width="300" height="300">
     <a>
     {% endfor %}
