@@ -10,11 +10,11 @@
 
 <div class="example-wrapper">
     <h1>Bienvenue sur ALL4SPORTS !</h1>
-    <a href="/categorie" hover="Cyclisme">
     {% for PHOTOSACCUEIL in photosaccueil %}
+    <a href="{{path('app_categorieList',{id:PHOTOSACCUEIL.listesport})}}" hover="Cyclisme">
         <img src={{PHOTOSACCUEIL.photos}} width="300" height="300">
-    {% endfor %}
     <a>
+    {% endfor %}
     <p>Catégorie Cyclisme</p>
     </div>
 {% endblock %}
