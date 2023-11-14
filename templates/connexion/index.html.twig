@@ -11,14 +11,18 @@
 <div class="example-wrapper">
 
     <h1>CONNEXION</h1>
-        <li><label>Votre pseudo :</label>
-            <input name="pseudo" id="pseudo" type="text" />
-        </li>
-
-        <li><label>Votre mot de passe :</label>
-            <input name="password" id="password" type="password" />
-        </li>
-
+  <div class="form-example">
+    <label for="name">Pseudo: </label>
+    <input type="text" name="pseudo" id="pseudo" required />
+  </div>
+  <div class="form-example">
+    <label for="email">Mot de passe: </label>
+    <input type="password" name="password" id="password" required />
+  </div>
+  <div class="form-example">
+    <input type="submit" value="Connexion" />
+  </div>
+</form>
     <a href="inscription">
             <li>Pas encore de Compte?</li>
         </a>
