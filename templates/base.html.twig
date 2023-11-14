@@ -11,10 +11,6 @@
         {% endblock %}
     </head>
     <body>
-    <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
 <div class="example-wrapper">
 
@@ -23,7 +19,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ALL4SPORT</title>
-  <link rel="stylesheet" href="./style.css">
+  <link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
 
 </head>
   <body>
@@ -35,14 +31,14 @@
             <h1>All 4 Sport</h1>
         </div>
         <ul>
-            <a href="categorie">
+            <a href="categorieList">
                 <li>Catégorie</li>
             </a>
-            <a href="./Controller/rayon.php">
-                <li>connexion/créer un compte</li>
+            <a href="connexion">
+                <li>Connexion</li>
             </a>
-            <a href="article">
-                <li>panier</li>
+            <a href="panier">
+                <li>Panier</li>
             </a>
         </ul>
     </nav>
