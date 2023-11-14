@@ -11,16 +11,10 @@
 <div class="example-wrapper">
     <h1>Bienvenue sur ALL4SPORTS !</h1>
     <a href="/categorie" hover="Cyclisme">
-    {% for LISTESPORT in listesport %}
-        {{ LISTESPORT.sport }}
-        {% if loop.index is divisible by(3) and not loop.last %}
-            <br>
-        {% endif %}
-    {% endfor %}
-    <a>
     {% for PHOTOSACCUEIL in photosaccueil %}
         <img src={{PHOTOSACCUEIL.photos}} width="300" height="300">
     {% endfor %}
+    <a>
     <p>Catégorie Cyclisme</p>
     </div>
 {% endblock %}
