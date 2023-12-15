@@ -35,8 +35,6 @@ class PRODUIT
     #[ORM\Column(length: 100)]
     private ?string $nomproduit = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
-    private ?LISTESPORT $fk_listesport = null;
 
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
     private Collection $fk_lieudisponibilite;
@@ -46,6 +44,9 @@ class PRODUIT
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
     private Collection $photos;
+
+    #[ORM\ManyToOne(inversedBy: 'fk_produits')]
+    private ?LISTESPORT $fk_listesport = null;
 
 
     public function __construct()
