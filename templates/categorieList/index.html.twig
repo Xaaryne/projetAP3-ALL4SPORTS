@@ -14,7 +14,9 @@
    <h1>Toutes les Categorie</h1>
    <hi>{{id}}</h1>
     <a href="/categorie">
-    <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="300" height="300">
-
+    {% for PRODUIT in produit %}
+{#    {% if PRODUIT.fk_listesport == id%}#}
+        <h1>{{PRODUIT.nomproduit}}</h1>
+    {% endfor %}
 </div>
 {% endblock %}
