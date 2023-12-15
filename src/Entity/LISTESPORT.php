@@ -21,6 +21,9 @@ class LISTESPORT
     #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: CLIENTSPORT::class)]
     private Collection $fk_clientsport;
 
+    #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: PRODUIT::class)]
+    private Collection $fk_produits;
+
 
 
 
@@ -30,6 +33,7 @@ class LISTESPORT
     {
         $this->fk_clientsport = new ArrayCollection();
         $this->fk_produit = new ArrayCollection();
+        $this->fk_produits = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,5 +115,13 @@ class LISTESPORT
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, PRODUIT>
+     */
+    public function getFkProduits(): Collection
+    {
+        return $this->fk_produits;
     }
 }
