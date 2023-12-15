@@ -21,8 +21,7 @@ class LISTESPORT
     #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: CLIENTSPORT::class)]
     private Collection $fk_clientsport;
 
-    #[ORM\OneToMany(mappedBy: 'fk_listesport', targetEntity: PRODUIT::class)]
-    private Collection $fk_produit;
+
 
 
 
