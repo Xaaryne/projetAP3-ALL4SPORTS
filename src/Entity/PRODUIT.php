@@ -35,8 +35,6 @@ class PRODUIT
     #[ORM\Column(length: 100)]
     private ?string $nomproduit = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_produit')]
-    private ?LISTESPORT $fk_listesport = null;
 
     #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
     private Collection $fk_lieudisponibilite;
@@ -47,11 +45,15 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
     private Collection $photos;
 
+    #[ORM\ManyToOne(inversedBy: 'produit')]
+    private ?LISTESPORT $listesport = null;
+
+
+
 
     public function __construct()
     {
         $this->fk_panier = new ArrayCollection();
-        $this->fk_listesport = new ArrayCollection();
         $this->fk_lieudisponibilite = new ArrayCollection();
         $this->fk_lieustockage = new ArrayCollection();
         $this->photos = new ArrayCollection();
@@ -143,32 +145,6 @@ class PRODUIT
     /**
      * @return Collection<int, LISTESPORT>
      */
-    public function getFkListesport(): Collection
-    {
-        return $this->fk_listesport;
-    }
-
-    public function addFkListesport(LISTESPORT $fkListesport): static
-    {
-        if (!$this->fk_listesport->contains($fkListesport)) {
-            $this->fk_listesport->add($fkListesport);
-            $fkListesport->setFkProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkListesport(LISTESPORT $fkListesport): static
-    {
-        if ($this->fk_listesport->removeElement($fkListesport)) {
-            // set the owning side to null (unless already changed)
-            if ($fkListesport->getFkProduit() === $this) {
-                $fkListesport->setFkProduit(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getFkLieudisponibilite(): ?LIEUDISPONIBILITE
     {
@@ -202,13 +178,6 @@ class PRODUIT
     public function setNomproduit(string $nomproduit): static
     {
         $this->nomproduit = $nomproduit;
-
-        return $this;
-    }
-
-    public function setFkListesport(?LISTESPORT $fk_listesport): static
-    {
-        $this->fk_listesport = $fk_listesport;
 
         return $this;
     }
@@ -283,6 +252,18 @@ class PRODUIT
                 $photo->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getListesport(): ?LISTESPORT
+    {
+        return $this->listesport;
+    }
+
+    public function setListesport(?LISTESPORT $listesport): static
+    {
+        $this->listesport = $listesport;
 
         return $this;
     }

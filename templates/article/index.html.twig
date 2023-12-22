@@ -10,8 +10,12 @@
         <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="400" height="400">
     </div>
     <div class="text-article" style="float:left">
-        <h1>Nom_Article</h1>
-        <h3>Description</h3>
+        {% for PRODUIT in produit %}
+            {% if PRODUIT.id == id%}
+                <h1>{{PRODUIT.nomproduit}}</h1>
+                <h3>{{PRODUIT.description}}</h3>
+            {% endif %}
+        {% endfor %}
         </div>
     <div class="text-commander" style="float:right">
     <table>
