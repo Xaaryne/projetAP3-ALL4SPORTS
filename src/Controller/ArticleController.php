@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/article', name: 'app_article')]
+    #[Route('/article/{id}', name: 'app_article')]
     public function index(PRODUITRepository $produitRepositary): Response
     {
         $produit = $produitRepositary->findAll();

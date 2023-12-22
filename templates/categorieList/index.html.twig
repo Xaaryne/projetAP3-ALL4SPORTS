@@ -12,11 +12,12 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
    <h1>Toutes les Categorie</h1>
-   <hi>{{id}}</h1>
-    <a href="/categorie">
     {% for PRODUIT in produit %}
-{#    {% if PRODUIT.fk_listesport == id%}#}
-        <h1>{{PRODUIT.nomproduit}}</h1>
+        {% if PRODUIT.listesport.id == id%}
+            <a href="{{path('app_article',{id:PRODUIT.id})}}">
+                <h1>{{PRODUIT.nomproduit}}</h1>
+            <a>
+        {% endif %}    
     {% endfor %}
 </div>
 {% endblock %}
