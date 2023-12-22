@@ -45,6 +45,9 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
     private Collection $photos;
 
+    #[ORM\ManyToOne(inversedBy: 'produit')]
+    private ?LISTESPORT $listesport = null;
+
 
 
 
@@ -249,6 +252,18 @@ class PRODUIT
                 $photo->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getListesport(): ?LISTESPORT
+    {
+        return $this->listesport;
+    }
+
+    public function setListesport(?LISTESPORT $listesport): static
+    {
+        $this->listesport = $listesport;
 
         return $this;
     }
