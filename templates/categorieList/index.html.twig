@@ -14,9 +14,19 @@
    <h1>Toutes les Categorie</h1>
     {% for PRODUIT in produit %}
         {% if PRODUIT.listesport.id == id%}
-            <a href="{{path('app_article',{id:PRODUIT.id})}}">
-                <h1>{{PRODUIT.nomproduit}}</h1>
-            <a>
+
+            {% for PHOTOS in photos %}
+                {% if PHOTOS.produit.id == PRODUIT.id %}
+                <div class = "catégorieproduit">
+                    <a href="{{path('app_article',{id:PRODUIT.id})}}">
+                        <img src={{PHOTOS.photos}} width="250" height="250">
+                    <a>
+                    <br>
+                    <p1>{{PRODUIT.nomproduit}}</p1>
+                </div>
+                {% endif %} 
+            {% endfor %}
+
         {% endif %}    
     {% endfor %}
 </div>
