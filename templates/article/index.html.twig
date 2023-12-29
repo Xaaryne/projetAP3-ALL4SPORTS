@@ -7,7 +7,12 @@
 </head>
 <body>
     <div class="image-article" style="float:left">
-        <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="400" height="400">
+            {% for PHOTOS in photos %}
+                {% if PHOTOS.produit.id == id %}
+                    <img src={{PHOTOS.photos}} width="250" height="250">
+                {% endif %}
+            {% endfor %}
+
     </div>
     <div class="text-article" style="float:left">
         {% for PRODUIT in produit %}
