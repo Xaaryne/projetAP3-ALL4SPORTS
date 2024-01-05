@@ -29,7 +29,7 @@ class COMMANDES
     private Collection $fk_panier;
 
     #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?CLIENT $fk_client = null;
 
     #[ORM\Column(nullable: true)]
