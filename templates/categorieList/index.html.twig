@@ -7,27 +7,30 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
-
+<link rel="stylesheet" href="/css/CatégorieProduits.css">
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Toutes les Categorie</h1>
+    <div>
+        {% for PRODUIT in produit %}
+            {% if PRODUIT.listesport.id == id%}
 
-   <h1>Toutes les Categorie</h1>
-    {% for PRODUIT in produit %}
-        {% if PRODUIT.listesport.id == id%}
+                {% for PHOTOS in photos %}
+                    {% if PHOTOS.produit.id == PRODUIT.id %}
+                    <div class = "produit">
+                        <a href="{{path('app_article',{id:PRODUIT.id})}}">
+                            <img src={{PHOTOS.photos}} width="250" height="250">
+                        <a>
+                        <br>
+                        <div class ="nomproduit">
+                            <p1>{{PRODUIT.nomproduit}}</p1>
+                        </div>
+                    </div>
+                    {% endif %} 
+                {% endfor %}
 
-            {% for PHOTOS in photos %}
-                {% if PHOTOS.produit.id == PRODUIT.id %}
-                <div class = "catégorieproduit">
-                    <a href="{{path('app_article',{id:PRODUIT.id})}}">
-                        <img src={{PHOTOS.photos}} width="250" height="250">
-                    <a>
-                    <br>
-                    <p1>{{PRODUIT.nomproduit}}</p1>
-                </div>
-                {% endif %} 
-            {% endfor %}
-
-        {% endif %}    
-    {% endfor %}
+            {% endif %}    
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
