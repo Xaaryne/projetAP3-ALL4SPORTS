@@ -8,7 +8,7 @@
 <body>
     <div class="image-article" style="float:left">
             {% for PHOTOS in photos %}
-                {% if PHOTOS.produit.id == id %}
+                {% if PHOTOS.produit.id == id %}  
                     <img src={{PHOTOS.photos}} width="250" height="250">
                 {% endif %}
             {% endfor %}
@@ -26,17 +26,10 @@
         {% endfor %}
         </div>
     <div class="text-commander" style="float:right">
-    <table>
-        <thead>
-            <tr>
-                <th>Commander</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th><button>Ajouter au panier</button></th>
-        </tbody>
-    </table>
+    <p>Commander</p>
+    <a href="{{ path('app_panier') }}">
+        <th><button onclick="/panier">Ajouter au panier</button></th>
+    </a>
     </div>
 </body>
 
