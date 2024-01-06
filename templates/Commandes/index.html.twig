@@ -9,14 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-<h1>sport List</h1>
-    <ul>
-        {% for LISTESPORT in listesport %}
-            <li>{{ LISTESPORT.sport }}</li>
+        {% for COMMANDES in commandes %}
+            <p1>la commande:{{COMMANDES.id}} qui est {{COMMANDES.etat}}</p1>
+            <p2>le prix total est de {{COMMANDES.prixtotal}} euros<br></p2>
+            {% for PANIER in panier %}
+            {% endfor %}
         {% endfor %}
-    </ul>
-    <h1>Tous les articles</h1>
-    <a href="/article">
-    <img src="https://www.velos17loisirs.com/wp-content/uploads/2021/01/Velo-tout-terrain_%C2%A9VELOS17LOISIRS_2022_7.jpg" width="300" height="300">
 </div>
 {% endblock %}
