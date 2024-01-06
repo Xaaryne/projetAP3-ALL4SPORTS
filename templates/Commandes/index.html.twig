@@ -9,6 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-<p1>test</p1>
+        {% for COMMANDES in commandes %}
+            <p1>la commande:{{COMMANDES.id}} qui est {{COMMANDES.etat}}</p1>
+            <p2>le prix total est de {{COMMANDES.prixtotal}} euros<br></p2>
+            {% for PANIER in panier %}
+            {% endfor %}
+        {% endfor %}
 </div>
 {% endblock %}
