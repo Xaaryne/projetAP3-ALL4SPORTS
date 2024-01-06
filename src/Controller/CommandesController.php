@@ -12,8 +12,8 @@ class CommandesController extends AbstractController
     #[Route('/Commandes', name: 'app_commandes')]
     public function index(): Response
     {
-        return $this->render('categorie/index.html.twig', [
-            'controller_name' => 'CategorieController',
+        return $this->render('Commandes/index.html.twig', [
+            'controller_name' => 'CommandesController',
 
         ]);
     }
