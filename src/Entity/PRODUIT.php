@@ -46,6 +46,9 @@ class PRODUIT
     #[ORM\ManyToOne(inversedBy: 'produit')]
     private ?LISTESPORT $listesport = null;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PANIER::class)]
+    private Collection $panier;
+
 
 
 
@@ -55,6 +58,7 @@ class PRODUIT
         $this->fk_lieudisponibilite = new ArrayCollection();
         $this->fk_lieustockage = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->panier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +266,36 @@ class PRODUIT
     public function setListesport(?LISTESPORT $listesport): static
     {
         $this->listesport = $listesport;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PANIER>
+     */
+    public function getPanier(): Collection
+    {
+        return $this->panier;
+    }
+
+    public function addPanier(PANIER $panier): static
+    {
+        if (!$this->panier->contains($panier)) {
+            $this->panier->add($panier);
+            $panier->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(PANIER $panier): static
+    {
+        if ($this->panier->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getProduit() === $this) {
+                $panier->setProduit(null);
+            }
+        }
 
         return $this;
     }

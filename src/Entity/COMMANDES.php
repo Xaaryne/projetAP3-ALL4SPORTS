@@ -31,10 +31,14 @@ class COMMANDES
     #[ORM\Column(nullable: true)]
     private ?float $prixtotal = null;
 
+    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: PANIER::class)]
+    private Collection $paniers;
+
     public function __construct()
     {
         $this->fk_client = new ArrayCollection();
         $this->fk_panier = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +146,36 @@ class COMMANDES
     public function setPrixtotal(?float $prixtotal): static
     {
         $this->prixtotal = $prixtotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PANIER>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(PANIER $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers->add($panier);
+            $panier->setCommandes($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(PANIER $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getCommandes() === $this) {
+                $panier->setCommandes(null);
+            }
+        }
 
         return $this;
     }

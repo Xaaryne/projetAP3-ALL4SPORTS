@@ -16,6 +16,12 @@ class PANIER
     #[ORM\Column]
     private ?int $quantite = null;
 
+    #[ORM\ManyToOne(inversedBy: 'paniers')]
+    private ?COMMANDES $commandes = null;
+
+    #[ORM\ManyToOne(inversedBy: 'panier')]
+    private ?PRODUIT $produit = null;
+
 
     public function getId(): ?int
     {
@@ -54,6 +60,30 @@ class PANIER
     public function setFkProduit(?PRODUIT $fk_produit): static
     {
         $this->fk_produit = $fk_produit;
+
+        return $this;
+    }
+
+    public function getCommandes(): ?COMMANDES
+    {
+        return $this->commandes;
+    }
+
+    public function setCommandes(?COMMANDES $commandes): static
+    {
+        $this->commandes = $commandes;
+
+        return $this;
+    }
+
+    public function getProduit(): ?PRODUIT
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?PRODUIT $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }
