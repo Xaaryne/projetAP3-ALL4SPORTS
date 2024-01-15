@@ -27,8 +27,6 @@ class PRODUIT
     #[ORM\Column(length: 55)]
     private ?string $fournisseur = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: PANIER::class)]
-    private Collection $fk_panier;
 
 
 

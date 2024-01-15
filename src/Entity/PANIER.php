@@ -16,13 +16,6 @@ class PANIER
     #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_panier')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?COMMANDES $fk_commandes = null;
-
-    #[ORM\ManyToOne(inversedBy: 'fk_panier')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?PRODUIT $fk_produit = null;
 
     public function getId(): ?int
     {

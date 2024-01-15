@@ -24,10 +24,6 @@ class COMMANDES
     private ?string $etat = null;
 
 
-
-    #[ORM\OneToMany(mappedBy: 'fk_commandes', targetEntity: PANIER::class, orphanRemoval: true)]
-    private Collection $fk_panier;
-
     #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
     #[ORM\JoinColumn(nullable: true)]
     private ?CLIENT $fk_client = null;
