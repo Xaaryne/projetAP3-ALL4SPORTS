@@ -19,19 +19,17 @@ class LIEUDISPONIBILITE
     private ?int $quantite = null;
 
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etagere = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $etage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
+    private ?PRODUIT $produit = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
-    private ?MAGASIN $fk_magasin = null;
-
-    #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
-    private ?PRODUIT $fk_produit = null;
-
-    public function __construct()
-    {
-        $this->fk_magasin = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
+    private ?MAGASIN $magasin = null;
 
     public function getId(): ?int
     {
@@ -58,49 +56,52 @@ class LIEUDISPONIBILITE
     /**
      * @return Collection<int, MAGASIN>
      */
-    public function getFkMagasin(): Collection
+
+    public function getEtagere(): ?string
     {
-        return $this->fk_magasin;
+        return $this->etagere;
     }
 
-    public function addFkMagasin(MAGASIN $fkMagasin): static
+    public function setEtagere(?string $etagere): static
     {
-        if (!$this->fk_magasin->contains($fkMagasin)) {
-            $this->fk_magasin->add($fkMagasin);
-            $fkMagasin->setFkLieudisponibilite($this);
-        }
+        $this->etagere = $etagere;
 
         return $this;
     }
 
-    public function removeFkMagasin(MAGASIN $fkMagasin): static
+    public function getEtage(): ?int
     {
-        if ($this->fk_magasin->removeElement($fkMagasin)) {
-            // set the owning side to null (unless already changed)
-            if ($fkMagasin->getFkLieudisponibilite() === $this) {
-                $fkMagasin->setFkLieudisponibilite(null);
-            }
-        }
+        return $this->etage;
+    }
+
+    public function setEtage(?int $etage): static
+    {
+        $this->etage = $etage;
 
         return $this;
     }
 
-    public function setFkProduit(PRODUIT $fk_produit): static
+    public function getProduit(): ?PRODUIT
     {
-        $this->fk_produit = $fk_produit;
+        return $this->produit;
+    }
+
+    public function setProduit(?PRODUIT $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }
 
-    public function setFkMagasin(?MAGASIN $fk_magasin): static
+    public function getMagasin(): ?MAGASIN
     {
-        $this->fk_magasin = $fk_magasin;
-
-        return $this;
+        return $this->magasin;
     }
 
-    public function getFkProduit(): ?PRODUIT
+    public function setMagasin(?MAGASIN $magasin): static
     {
-        return $this->fk_produit;
+        $this->magasin = $magasin;
+
+        return $this;
     }
 }

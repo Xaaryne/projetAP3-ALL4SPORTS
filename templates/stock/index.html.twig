@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello StockController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+    Magasin: <br>
+    {% for LIEUDISPONIBILITE in lieudisponibilite %}
+        {% if LIEUDISPONIBILITE.produit.id == id %}
+            <p1>Au magasin {{LIEUDISPONIBILITE.magasin.nom}} le produit :{{LIEUDISPONIBILITE.produit.nomproduit}} se trouve à l'étage {{LIEUDISPONIBILITE.etage}} à l'étagère {{LIEUDISPONIBILITE.etagere}}<br></p1>
+        {% endif %}
+    {% endfor %}
+    Entrepot:<br>
+    {% for LIEUSTOCKAGE in lieustockage %}
+        {% if LIEUSTOCKAGE.produit.id == id %}
+            <p1>Au magasin {{LIEUSTOCKAGE.Entrepot.nom}} le produit :{{LIEUSTOCKAGE.produit.nomproduit}} se trouve à l'étage {{LIEUSTOCKAGE.etage}} à l'étagère {{LIEUSTOCKAGE.etagere}}<br></p1>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

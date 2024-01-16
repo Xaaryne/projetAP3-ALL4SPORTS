@@ -21,9 +21,13 @@ class ENTREPOT
     #[ORM\OneToMany(mappedBy: 'fk_entrepot', targetEntity: LIEUSTOCKAGE::class)]
     private Collection $fk_lieustockage;
 
+    #[ORM\OneToMany(mappedBy: 'entrepot', targetEntity: LIEUSTOCKAGE::class)]
+    private Collection $stockage;
+
     public function __construct()
     {
         $this->fk_lieustockage = new ArrayCollection();
+        $this->stockage = new ArrayCollection();
     }
 
 
@@ -72,6 +76,36 @@ class ENTREPOT
             // set the owning side to null (unless already changed)
             if ($fkLieustockage->getFkEntrepot() === $this) {
                 $fkLieustockage->setFkEntrepot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUSTOCKAGE>
+     */
+    public function getStockage(): Collection
+    {
+        return $this->stockage;
+    }
+
+    public function addStockage(LIEUSTOCKAGE $stockage): static
+    {
+        if (!$this->stockage->contains($stockage)) {
+            $this->stockage->add($stockage);
+            $stockage->setEntrepot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockage(LIEUSTOCKAGE $stockage): static
+    {
+        if ($this->stockage->removeElement($stockage)) {
+            // set the owning side to null (unless already changed)
+            if ($stockage->getEntrepot() === $this) {
+                $stockage->setEntrepot(null);
             }
         }
 
