@@ -12,7 +12,9 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     {% for PRODUIT in produit %}
+    <a href="{{path('app_stock',{id:PRODUIT.id})}}">
         <p1>{{PRODUIT.nomproduit}}<br></p1>
+    </a>
     {% endfor %}
 </div>
 {% endblock %}
