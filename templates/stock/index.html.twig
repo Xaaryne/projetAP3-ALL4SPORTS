@@ -19,7 +19,7 @@
     Entrepot:<br>
     {% for LIEUSTOCKAGE in lieustockage %}
         {% if LIEUSTOCKAGE.produit.id == id %}
-            <p1>Au magasin {{LIEUSTOCKAGE.Entrepot.nom}} le produit :{{LIEUSTOCKAGE.produit.nomproduit}} se trouve à l'étage {{LIEUSTOCKAGE.etage}} à l'étagère {{LIEUSTOCKAGE.etagere}} il en y a {{LIEUSTOCKAGE.quantite}}<br></p1>
+            <p1>A l'entrepot {{LIEUSTOCKAGE.Entrepot.nom}} le produit :{{LIEUSTOCKAGE.produit.nomproduit}} se trouve à l'étage {{LIEUSTOCKAGE.etage}} à l'étagère {{LIEUSTOCKAGE.etagere}} il en y a {{LIEUSTOCKAGE.quantite}}<br></p1>
         {% endif %}
     {% endfor %}
 </div>
