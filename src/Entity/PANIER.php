@@ -40,30 +40,6 @@ class PANIER
         return $this;
     }
 
-    public function getFkCommandes(): ?COMMANDES
-    {
-        return $this->fk_commandes;
-    }
-
-    public function setFkCommandes(?COMMANDES $fk_commandes): static
-    {
-        $this->fk_commandes = $fk_commandes;
-
-        return $this;
-    }
-
-    public function getFkProduit(): ?PRODUIT
-    {
-        return $this->fk_produit;
-    }
-
-    public function setFkProduit(?PRODUIT $fk_produit): static
-    {
-        $this->fk_produit = $fk_produit;
-
-        return $this;
-    }
-
     public function getCommandes(): ?COMMANDES
     {
         return $this->commandes;
