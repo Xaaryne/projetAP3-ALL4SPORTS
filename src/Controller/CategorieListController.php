@@ -8,20 +8,26 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\PRODUITRepository;
 use App\Repository\PHOTOSPRODUITRepository;
+use App\Entity\LISTESPORT;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CategorieListController extends AbstractController
 {
     #[Route('/categorieList/{id}', name: 'app_categorieList')]
-    public function index(int $id,Request $Request,PRODUITRepository $produitrepository, PHOTOSPRODUITRepository $photosproduitrepository): Response
+    public function index(int $id,Request $Request,PRODUITRepository $produitrepository,EntityManagerInterface $entityManager, PHOTOSPRODUITRepository $photosproduitrepository): Response
     {
         $produit = $produitrepository->findAll();
         $photosproduit = $photosproduitrepository ->findAll();
         $CurrentUrl = $Request->getSchemeAndHttpHost() . $Request->getRequestUri();
+        
+        $sport = $entityManager->getRepository(LISTESPORT::class)->find($id);
+        $typesport = $sport -> getsport();
         return $this->render('categorieList/index.html.twig', [
             'controller_name' => 'CategorieListController',
             'id' => $id,
             'produit' => $produit,
             'photos' => $photosproduit,
+            'sport' => $typesport,
 
 
  
