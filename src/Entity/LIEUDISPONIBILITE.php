@@ -28,6 +28,13 @@ class LIEUDISPONIBILITE
     #[ORM\ManyToOne(inversedBy: 'fk_lieudisponibilite')]
     private ?PRODUIT $fk_produit = null;
 
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etagere = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etage = null;
+
     public function __construct()
     {
         $this->fk_magasin = new ArrayCollection();
@@ -102,5 +109,30 @@ class LIEUDISPONIBILITE
     public function getFkProduit(): ?PRODUIT
     {
         return $this->fk_produit;
+    }
+
+
+    public function getEtagere(): ?string
+    {
+        return $this->etagere;
+    }
+
+    public function setEtagere(?string $etagere): static
+    {
+        $this->etagere = $etagere;
+
+        return $this;
+    }
+
+    public function getEtage(): ?int
+    {
+        return $this->etage;
+    }
+
+    public function setEtage(?int $etage): static
+    {
+        $this->etage = $etage;
+
+        return $this;
     }
 }
