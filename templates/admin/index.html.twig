@@ -11,10 +11,8 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/yann/Documents/GitHub/projetAP3-ALL4SPORTS/src/Controller/AdminController.php'|file_link(0) }}">src/Controller/AdminController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/yann/Documents/GitHub/projetAP3-ALL4SPORTS/templates/admin/index.html.twig'|file_link(0) }}">templates/admin/index.html.twig</a></code></li>
-    </ul>
+    {% for PRODUIT in produit %}
+        <p1>{{PRODUIT.nomproduit}}<br></p1>
+    {% endfor %}
 </div>
 {% endblock %}
