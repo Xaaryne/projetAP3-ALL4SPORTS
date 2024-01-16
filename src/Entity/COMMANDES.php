@@ -24,10 +24,6 @@ class COMMANDES
     private ?string $etat = null;
 
 
-
-    #[ORM\OneToMany(mappedBy: 'fk_commandes', targetEntity: PANIER::class, orphanRemoval: true)]
-    private Collection $fk_panier;
-
     #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
     #[ORM\JoinColumn(nullable: true)]
     private ?CLIENT $fk_client = null;
@@ -35,10 +31,13 @@ class COMMANDES
     #[ORM\Column(nullable: true)]
     private ?float $prixtotal = null;
 
+    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: PANIER::class)]
+    private Collection $paniers;
+
     public function __construct()
     {
-        $this->fk_client = new ArrayCollection();
         $this->fk_panier = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,32 +73,6 @@ class COMMANDES
     /**
      * @return Collection<int, CLIENT>
      */
-    public function getFkClient(): Collection
-    {
-        return $this->fk_client;
-    }
-
-    public function addFkClient(CLIENT $fkClient): static
-    {
-        if (!$this->fk_client->contains($fkClient)) {
-            $this->fk_client->add($fkClient);
-            $fkClient->setFkCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkClient(CLIENT $fkClient): static
-    {
-        if ($this->fk_client->removeElement($fkClient)) {
-            // set the owning side to null (unless already changed)
-            if ($fkClient->getFkCommande() === $this) {
-                $fkClient->setFkCommande(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, PANIER>
@@ -131,12 +104,7 @@ class COMMANDES
         return $this;
     }
 
-    public function setFkClient(?CLIENT $fk_client): static
-    {
-        $this->fk_client = $fk_client;
 
-        return $this;
-    }
 
     public function getPrixtotal(): ?float
     {
@@ -146,6 +114,36 @@ class COMMANDES
     public function setPrixtotal(?float $prixtotal): static
     {
         $this->prixtotal = $prixtotal;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PANIER>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(PANIER $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers->add($panier);
+            $panier->setCommandes($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(PANIER $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getCommandes() === $this) {
+                $panier->setCommandes(null);
+            }
+        }
 
         return $this;
     }

@@ -10,9 +10,13 @@
 
 <div class="example-wrapper">
         {% for COMMANDES in commandes %}
-            <p1>la commande:{{COMMANDES.id}} qui est {{COMMANDES.etat}}</p1>
-            <p2>le prix total est de {{COMMANDES.prixtotal}} euros<br></p2>
+            <p1><br>la commande:{{COMMANDES.id}} qui est {{COMMANDES.etat}}</p1>
+            <p2>le prix total est de {{COMMANDES.prixtotal}} euros pour : <br></p2>
             {% for PANIER in panier %}
+                {% if PANIER.commandes.id == COMMANDES.id%}
+                    <p2>_{{PANIER.produit.nomproduit}} nombre du produit commandé : {{PANIER.quantite}} <br>
+                    pour un prix unitaire de {{PANIER.produit.prix}} euros <br></p2>
+                {% endif %}
             {% endfor %}
         {% endfor %}
 </div>

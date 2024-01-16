@@ -9,18 +9,20 @@
 </style>
 
 <div class="example-wrapper">
-    {% for PRODUIT in produit %}
-        {% if PRODUIT.id == produitid%}
-            <p1>nom du produit:{{PRODUIT.nomproduit}}<br></p1>
-            <p2>nombre de produit : {{quantite}}<br></p2>
-            <p2>Prix :{{PRODUIT.prix}} €<br></p2>
-            <p3>Prix total :{{PRODUIT.prix * quantite}}</p2>
+    {% if produitid != null %}
+        {% for PRODUIT in produit %}
+            {% if PRODUIT.id == produitid%}
+                <p1>nom du produit:{{PRODUIT.nomproduit}}<br></p1>
+                <p2>nombre de produit : {{quantite}}<br></p2>
+                <p2>Prix :{{PRODUIT.prix}} €<br></p2>
+                <p3>Prix total :{{PRODUIT.prix * quantite}} €</p2>
 
-       {% endif %}
-    {% endfor %}
-   
-<script>
-
-</script>
-</div>
+           {% endif %}
+        {% endfor %}
+        <form method="post" action="/createcommande">
+            <input type="hidden" name="quantite" value={{quantite}}>
+            <input type="hidden" name="produitid" value={{produitid}}>
+            <input type="submit" value="Confirmer commande">
+        </form>
+    {% endif %}    
 {% endblock %}
