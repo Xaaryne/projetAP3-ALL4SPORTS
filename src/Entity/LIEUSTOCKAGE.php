@@ -33,6 +33,12 @@ class LIEUSTOCKAGE
     #[ORM\Column(nullable: true)]
     private ?int $etage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'stockage')]
+    private ?PRODUIT $produit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'stockage')]
+    private ?ENTREPOT $entrepot = null;
+
 
     public function getId(): ?int
     {
@@ -80,6 +86,30 @@ class LIEUSTOCKAGE
     public function setEtage(?int $etage): static
     {
         $this->etage = $etage;
+
+        return $this;
+    }
+
+    public function getProduit(): ?PRODUIT
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?PRODUIT $produit): static
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getEntrepot(): ?ENTREPOT
+    {
+        return $this->entrepot;
+    }
+
+    public function setEntrepot(?ENTREPOT $entrepot): static
+    {
+        $this->entrepot = $entrepot;
 
         return $this;
     }

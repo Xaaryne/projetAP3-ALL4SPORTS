@@ -21,9 +21,13 @@ class MAGASIN
     #[ORM\OneToMany(mappedBy: 'fk_magasin', targetEntity: LIEUDISPONIBILITE::class)]
     private Collection $fk_lieudisponibilite;
 
+    #[ORM\OneToMany(mappedBy: 'magasin', targetEntity: LIEUDISPONIBILITE::class)]
+    private Collection $disponibilite;
+
     public function __construct()
     {
         $this->fk_lieudisponibilite = new ArrayCollection();
+        $this->disponibilite = new ArrayCollection();
     }
 
 
@@ -73,6 +77,36 @@ class MAGASIN
             // set the owning side to null (unless already changed)
             if ($fkLieudisponibilite->getFkMagasin() === $this) {
                 $fkLieudisponibilite->setFkMagasin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUDISPONIBILITE>
+     */
+    public function getDisponibilite(): Collection
+    {
+        return $this->disponibilite;
+    }
+
+    public function addDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    {
+        if (!$this->disponibilite->contains($disponibilite)) {
+            $this->disponibilite->add($disponibilite);
+            $disponibilite->setMagasin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    {
+        if ($this->disponibilite->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getMagasin() === $this) {
+                $disponibilite->setMagasin(null);
             }
         }
 

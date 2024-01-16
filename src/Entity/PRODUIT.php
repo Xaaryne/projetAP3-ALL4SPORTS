@@ -49,6 +49,12 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PANIER::class)]
     private Collection $panier;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUDISPONIBILITE::class)]
+    private Collection $disponibilite;
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUSTOCKAGE::class)]
+    private Collection $stockage;
+
 
 
 
@@ -59,6 +65,8 @@ class PRODUIT
         $this->fk_lieustockage = new ArrayCollection();
         $this->photos = new ArrayCollection();
         $this->panier = new ArrayCollection();
+        $this->disponibilite = new ArrayCollection();
+        $this->stockage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,6 +302,66 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($panier->getProduit() === $this) {
                 $panier->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUDISPONIBILITE>
+     */
+    public function getDisponibilite(): Collection
+    {
+        return $this->disponibilite;
+    }
+
+    public function addDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    {
+        if (!$this->disponibilite->contains($disponibilite)) {
+            $this->disponibilite->add($disponibilite);
+            $disponibilite->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    {
+        if ($this->disponibilite->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getProduit() === $this) {
+                $disponibilite->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUSTOCKAGE>
+     */
+    public function getStockage(): Collection
+    {
+        return $this->stockage;
+    }
+
+    public function addStockage(LIEUSTOCKAGE $stockage): static
+    {
+        if (!$this->stockage->contains($stockage)) {
+            $this->stockage->add($stockage);
+            $stockage->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStockage(LIEUSTOCKAGE $stockage): static
+    {
+        if ($this->stockage->removeElement($stockage)) {
+            // set the owning side to null (unless already changed)
+            if ($stockage->getProduit() === $this) {
+                $stockage->setProduit(null);
             }
         }
 

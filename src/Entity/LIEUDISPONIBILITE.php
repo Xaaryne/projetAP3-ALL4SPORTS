@@ -25,6 +25,12 @@ class LIEUDISPONIBILITE
     #[ORM\Column(nullable: true)]
     private ?int $etage = null;
 
+    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
+    private ?PRODUIT $produit = null;
+
+    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
+    private ?MAGASIN $magasin = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +77,30 @@ class LIEUDISPONIBILITE
     public function setEtage(?int $etage): static
     {
         $this->etage = $etage;
+
+        return $this;
+    }
+
+    public function getProduit(): ?PRODUIT
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?PRODUIT $produit): static
+    {
+        $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getMagasin(): ?MAGASIN
+    {
+        return $this->magasin;
+    }
+
+    public function setMagasin(?MAGASIN $magasin): static
+    {
+        $this->magasin = $magasin;
 
         return $this;
     }
