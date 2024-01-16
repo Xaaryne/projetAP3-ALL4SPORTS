@@ -36,7 +36,6 @@ class COMMANDES
 
     public function __construct()
     {
-        $this->fk_client = new ArrayCollection();
         $this->fk_panier = new ArrayCollection();
         $this->paniers = new ArrayCollection();
     }
@@ -74,32 +73,6 @@ class COMMANDES
     /**
      * @return Collection<int, CLIENT>
      */
-    public function getFkClient(): Collection
-    {
-        return $this->fk_client;
-    }
-
-    public function addFkClient(CLIENT $fkClient): static
-    {
-        if (!$this->fk_client->contains($fkClient)) {
-            $this->fk_client->add($fkClient);
-            $fkClient->setFkCommande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkClient(CLIENT $fkClient): static
-    {
-        if ($this->fk_client->removeElement($fkClient)) {
-            // set the owning side to null (unless already changed)
-            if ($fkClient->getFkCommande() === $this) {
-                $fkClient->setFkCommande(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, PANIER>
@@ -131,12 +104,7 @@ class COMMANDES
         return $this;
     }
 
-    public function setFkClient(?CLIENT $fk_client): static
-    {
-        $this->fk_client = $fk_client;
 
-        return $this;
-    }
 
     public function getPrixtotal(): ?float
     {
