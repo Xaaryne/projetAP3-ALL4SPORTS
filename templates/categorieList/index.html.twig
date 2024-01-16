@@ -9,8 +9,7 @@
 </style>
 <link rel="stylesheet" href="/css/CatégorieProduits.css">
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-    <h1>Toutes les Categorie</h1>
+    <h1>liste des produit dans la catégorie : {{sport}}</h1>
     <div>
         {% for PRODUIT in produit %}
             {% if PRODUIT.listesport.id == id%}
