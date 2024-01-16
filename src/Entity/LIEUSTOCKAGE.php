@@ -33,11 +33,6 @@ class LIEUSTOCKAGE
     #[ORM\Column(nullable: true)]
     private ?int $etage = null;
 
-    public function __construct()
-    {
-        $this->fk_produit = new ArrayCollection();
-        $this->fk_entrepot = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -59,76 +54,11 @@ class LIEUSTOCKAGE
     /**
      * @return Collection<int, PRODUIT>
      */
-    public function getFkProduit(): Collection
-    {
-        return $this->fk_produit;
-    }
-
-    public function addFkProduit(PRODUIT $fkProduit): static
-    {
-        if (!$this->fk_produit->contains($fkProduit)) {
-            $this->fk_produit->add($fkProduit);
-            $fkProduit->setFkLieustockage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkProduit(PRODUIT $fkProduit): static
-    {
-        if ($this->fk_produit->removeElement($fkProduit)) {
-            // set the owning side to null (unless already changed)
-            if ($fkProduit->getFkLieustockage() === $this) {
-                $fkProduit->setFkLieustockage(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, ENTREPOT>
      */
-    public function getFkEntrepot(): Collection
-    {
-        return $this->fk_entrepot;
-    }
 
-    public function addFkEntrepot(ENTREPOT $fkEntrepot): static
-    {
-        if (!$this->fk_entrepot->contains($fkEntrepot)) {
-            $this->fk_entrepot->add($fkEntrepot);
-            $fkEntrepot->setFkLieustockage($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkEntrepot(ENTREPOT $fkEntrepot): static
-    {
-        if ($this->fk_entrepot->removeElement($fkEntrepot)) {
-            // set the owning side to null (unless already changed)
-            if ($fkEntrepot->getFkLieustockage() === $this) {
-                $fkEntrepot->setFkLieustockage(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function setFkProduit(?PRODUIT $fk_produit): static
-    {
-        $this->fk_produit = $fk_produit;
-
-        return $this;
-    }
-
-    public function setFkEntrepot(?ENTREPOT $fk_entrepot): static
-    {
-        $this->fk_entrepot = $fk_entrepot;
-
-        return $this;
-    }
 
     public function getEtagere(): ?string
     {
