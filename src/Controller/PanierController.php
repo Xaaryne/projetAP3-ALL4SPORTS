@@ -29,6 +29,9 @@ class PanierController extends AbstractController
             'produitid' => $produitid,
         ]);
     }
+    /*Fonction permettant d'ajouter une commande 
+    Celle ci crée une entrée pour l'entité COMMANDE et PANIER puis met à jour la base de donnée 
+    étant donné que l'utilisateur n'a pas été mis en place on créer une entrée panier avec la commande*/
     #[Route('/createcommande', name:'app_createcommande')]
     public function createcommande(Request $request,EntityManagerInterface $entityManager,PRODUITRepository $produitrepository): Response 
     {
@@ -46,7 +49,7 @@ class PanierController extends AbstractController
         $newpanier ->setProduit($produit);
 
 
-
+//Création de la commande s
         $newcommande = new COMMANDES();
         $newcommande -> setEtat("En cours de confirmation");
         $newcommande -> setPrixtotal($produitprix * $quantite);

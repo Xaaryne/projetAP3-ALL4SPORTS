@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité servant à faire le lien entre les produits et les entreports elle est liée à ces deux entités*/
 #[ORM\Entity(repositoryClass: LIEUSTOCKAGERepository::class)]
 class LIEUSTOCKAGE
 {

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PANIERRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité représentant les paniers, elle est liée à COMMANDE et à PRODUIT, 
+il peut avoir plusieur entrée/produit liée à une seule commande*/ 
 #[ORM\Entity(repositoryClass: PANIERRepository::class)]
 class PANIER
 {

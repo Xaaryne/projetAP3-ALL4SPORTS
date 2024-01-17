@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ENFANTSRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité servant à gérer les enfants des utilisateurs elle est liée à l'entité CLIENT*/ 
 #[ORM\Entity(repositoryClass: ENFANTSRepository::class)]
 class ENFANTS
 {

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PHOTOSACCUEILRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité représentant les photos de la page d'accueil chaque entrée est un lien vers une images 
+dans public/images/catégories elle est liée à LISTESPORT*/
 #[ORM\Entity(repositoryClass: PHOTOSACCUEILRepository::class)]
 class PHOTOSACCUEIL
 {

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité servant à gérer les commandes et est liée à PANIER et à CLIENT*/ 
 #[ORM\Entity(repositoryClass: COMMANDESRepository::class)]
 class COMMANDES
 {

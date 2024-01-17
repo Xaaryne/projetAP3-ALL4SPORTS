@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\PHOTOSPRODUITRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité représentant les photos de produit chaque entrée est un lien vers une images 
+dans public/images/produit elle est liée à PRODUIT*/
 #[ORM\Entity(repositoryClass: PHOTOSPRODUITRepository::class)]
 class PHOTOSPRODUIT
 {

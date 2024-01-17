@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CLIENTSPORTRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité servant à faire le lien entre l'entité CLIENT et l'entité SPORT*/
 #[ORM\Entity(repositoryClass: CLIENTSPORTRepository::class)]
 class CLIENTSPORT
 {

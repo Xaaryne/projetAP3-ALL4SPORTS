@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité représentant les utilisateurs, client comme administrateur */
 #[ORM\Entity(repositoryClass: CLIENTRepository::class)]
 class CLIENT
 {

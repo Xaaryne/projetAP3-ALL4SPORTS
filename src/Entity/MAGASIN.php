@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/*Entité représentant les magasins*/
 #[ORM\Entity(repositoryClass: MAGASINRepository::class)]
 class MAGASIN
 {
