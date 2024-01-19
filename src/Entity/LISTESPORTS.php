@@ -21,6 +21,9 @@ class LISTESPORTS
     #[ORM\OneToMany(mappedBy: 'sport', targetEntity: PRODUIT::class)]
     private Collection $produits;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $photos = null;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -69,6 +72,18 @@ class LISTESPORTS
                 $produit->setSport(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhotos(): ?string
+    {
+        return $this->photos;
+    }
+
+    public function setPhotos(?string $photos): static
+    {
+        $this->photos = $photos;
 
         return $this;
     }

@@ -37,9 +37,13 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PANIER::class)]
     private Collection $panier;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
+    private Collection $photos;
+
     public function __construct()
     {
         $this->panier = new ArrayCollection();
+        $this->photos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +147,36 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($panier->getProduit() === $this) {
                 $panier->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PHOTOSPRODUIT>
+     */
+    public function getPhotos(): Collection
+    {
+        return $this->photos;
+    }
+
+    public function addPhoto(PHOTOSPRODUIT $photo): static
+    {
+        if (!$this->photos->contains($photo)) {
+            $this->photos->add($photo);
+            $photo->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhoto(PHOTOSPRODUIT $photo): static
+    {
+        if ($this->photos->removeElement($photo)) {
+            // set the owning side to null (unless already changed)
+            if ($photo->getProduit() === $this) {
+                $photo->setProduit(null);
             }
         }
 
