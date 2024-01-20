@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\PRODUITRepository;
 use App\Repository\PHOTOSPRODUITRepository;
-use App\Entity\LISTESPORT;
+use App\Entity\LISTESPORTS;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CategorieListController extends AbstractController
@@ -20,8 +20,8 @@ class CategorieListController extends AbstractController
         $photosproduit = $photosproduitrepository ->findAll();
         $CurrentUrl = $Request->getSchemeAndHttpHost() . $Request->getRequestUri();
         
-        $sport = $entityManager->getRepository(LISTESPORT::class)->find($id);
-        $typesport = $sport -> getsport();
+        $sport = $entityManager->getRepository(LISTESPORTS::class)->find($id);
+        $typesport = $sport -> getSport();
         return $this->render('categorieList/index.html.twig', [
             'controller_name' => 'CategorieListController',
             'id' => $id,
