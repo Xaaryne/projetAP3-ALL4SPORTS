@@ -40,10 +40,18 @@ class PRODUIT
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
     private Collection $photos;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUDISPONIBILITE::class)]
+    private Collection $lieudisponibilite;
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUENTREPOT::class)]
+    private Collection $lieuentrepot;
+
     public function __construct()
     {
         $this->panier = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->lieudisponibilite = new ArrayCollection();
+        $this->lieuentrepot = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +185,66 @@ class PRODUIT
             // set the owning side to null (unless already changed)
             if ($photo->getProduit() === $this) {
                 $photo->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUDISPONIBILITE>
+     */
+    public function getLieudisponibilite(): Collection
+    {
+        return $this->lieudisponibilite;
+    }
+
+    public function addLieudisponibilite(LIEUDISPONIBILITE $lieudisponibilite): static
+    {
+        if (!$this->lieudisponibilite->contains($lieudisponibilite)) {
+            $this->lieudisponibilite->add($lieudisponibilite);
+            $lieudisponibilite->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLieudisponibilite(LIEUDISPONIBILITE $lieudisponibilite): static
+    {
+        if ($this->lieudisponibilite->removeElement($lieudisponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($lieudisponibilite->getProduit() === $this) {
+                $lieudisponibilite->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LIEUENTREPOT>
+     */
+    public function getLieuentrepot(): Collection
+    {
+        return $this->lieuentrepot;
+    }
+
+    public function addLieuentrepot(LIEUENTREPOT $lieuentrepot): static
+    {
+        if (!$this->lieuentrepot->contains($lieuentrepot)) {
+            $this->lieuentrepot->add($lieuentrepot);
+            $lieuentrepot->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLieuentrepot(LIEUENTREPOT $lieuentrepot): static
+    {
+        if ($this->lieuentrepot->removeElement($lieuentrepot)) {
+            // set the owning side to null (unless already changed)
+            if ($lieuentrepot->getProduit() === $this) {
+                $lieuentrepot->setProduit(null);
             }
         }
 
