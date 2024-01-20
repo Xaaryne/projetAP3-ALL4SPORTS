@@ -15,63 +15,60 @@ class PRODUIT
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
+
     #[ORM\Column]
     private ?float $prix = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 55)]
     private ?string $reference = null;
 
-    #[ORM\Column(length: 55)]
+    #[ORM\Column(length: 55, nullable: true)]
     private ?string $fournisseur = null;
 
-
-
-
-    #[ORM\Column(length: 100)]
-    private ?string $nomproduit = null;
-
-
-    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUDISPONIBILITE::class)]
-    private Collection $fk_lieudisponibilite;
-
-    #[ORM\OneToMany(mappedBy: 'fk_produit', targetEntity: LIEUSTOCKAGE::class)]
-    private Collection $fk_lieustockage;
-
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
-    private Collection $photos;
-
-    #[ORM\ManyToOne(inversedBy: 'produit')]
-    private ?LISTESPORT $listesport = null;
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?LISTESPORTS $sport = null;
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PANIER::class)]
     private Collection $panier;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: PHOTOSPRODUIT::class)]
+    private Collection $photos;
+
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUDISPONIBILITE::class)]
-    private Collection $disponibilite;
+    private Collection $lieudisponibilite;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUSTOCKAGE::class)]
-    private Collection $stockage;
-
-
-
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: LIEUENTREPOT::class)]
+    private Collection $lieuentrepot;
 
     public function __construct()
     {
-        $this->fk_panier = new ArrayCollection();
-        $this->fk_lieudisponibilite = new ArrayCollection();
-        $this->fk_lieustockage = new ArrayCollection();
-        $this->photos = new ArrayCollection();
         $this->panier = new ArrayCollection();
-        $this->disponibilite = new ArrayCollection();
-        $this->stockage = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->lieudisponibilite = new ArrayCollection();
+        $this->lieuentrepot = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 
     public function getPrix(): ?float
@@ -91,7 +88,7 @@ class PRODUIT
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -115,9 +112,21 @@ class PRODUIT
         return $this->fournisseur;
     }
 
-    public function setFournisseur(string $fournisseur): static
+    public function setFournisseur(?string $fournisseur): static
     {
         $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    public function getSport(): ?LISTESPORTS
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?LISTESPORTS $sport): static
+    {
+        $this->sport = $sport;
 
         return $this;
     }
@@ -125,111 +134,27 @@ class PRODUIT
     /**
      * @return Collection<int, PANIER>
      */
-    public function getFkPanier(): Collection
+    public function getPanier(): Collection
     {
-        return $this->fk_panier;
+        return $this->panier;
     }
 
-    public function addFkPanier(PANIER $fkPanier): static
+    public function addPanier(PANIER $panier): static
     {
-        if (!$this->fk_panier->contains($fkPanier)) {
-            $this->fk_panier->add($fkPanier);
-            $fkPanier->setFkProduit($this);
+        if (!$this->panier->contains($panier)) {
+            $this->panier->add($panier);
+            $panier->setProduit($this);
         }
 
         return $this;
     }
 
-    public function removeFkPanier(PANIER $fkPanier): static
+    public function removePanier(PANIER $panier): static
     {
-        if ($this->fk_panier->removeElement($fkPanier)) {
+        if ($this->panier->removeElement($panier)) {
             // set the owning side to null (unless already changed)
-            if ($fkPanier->getFkProduit() === $this) {
-                $fkPanier->setFkProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, LISTESPORT>
-     */
-
-    public function getFkLieudisponibilite(): ?LIEUDISPONIBILITE
-    {
-        return $this->fk_lieudisponibilite;
-    }
-
-    public function setFkLieudisponibilite(?LIEUDISPONIBILITE $fk_lieudisponibilite): static
-    {
-        $this->fk_lieudisponibilite = $fk_lieudisponibilite;
-
-        return $this;
-    }
-
-    public function getFkLieustockage(): ?LIEUSTOCKAGE
-    {
-        return $this->fk_lieustockage;
-    }
-
-    public function setFkLieustockage(?LIEUSTOCKAGE $fk_lieustockage): static
-    {
-        $this->fk_lieustockage = $fk_lieustockage;
-
-        return $this;
-    }
-
-    public function getNomproduit(): ?string
-    {
-        return $this->nomproduit;
-    }
-
-    public function setNomproduit(string $nomproduit): static
-    {
-        $this->nomproduit = $nomproduit;
-
-        return $this;
-    }
-
-    public function addFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
-    {
-        if (!$this->fk_lieudisponibilite->contains($fkLieudisponibilite)) {
-            $this->fk_lieudisponibilite->add($fkLieudisponibilite);
-            $fkLieudisponibilite->setFkProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkLieudisponibilite(LIEUDISPONIBILITE $fkLieudisponibilite): static
-    {
-        if ($this->fk_lieudisponibilite->removeElement($fkLieudisponibilite)) {
-            // set the owning side to null (unless already changed)
-            if ($fkLieudisponibilite->getFkProduit() === $this) {
-                $fkLieudisponibilite->setFkProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function addFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
-    {
-        if (!$this->fk_lieustockage->contains($fkLieustockage)) {
-            $this->fk_lieustockage->add($fkLieustockage);
-            $fkLieustockage->setFkProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
-    {
-        if ($this->fk_lieustockage->removeElement($fkLieustockage)) {
-            // set the owning side to null (unless already changed)
-            if ($fkLieustockage->getFkProduit() === $this) {
-                $fkLieustockage->setFkProduit(null);
+            if ($panier->getProduit() === $this) {
+                $panier->setProduit(null);
             }
         }
 
@@ -266,72 +191,30 @@ class PRODUIT
         return $this;
     }
 
-    public function getListesport(): ?LISTESPORT
-    {
-        return $this->listesport;
-    }
-
-    public function setListesport(?LISTESPORT $listesport): static
-    {
-        $this->listesport = $listesport;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PANIER>
-     */
-    public function getPanier(): Collection
-    {
-        return $this->panier;
-    }
-
-    public function addPanier(PANIER $panier): static
-    {
-        if (!$this->panier->contains($panier)) {
-            $this->panier->add($panier);
-            $panier->setProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(PANIER $panier): static
-    {
-        if ($this->panier->removeElement($panier)) {
-            // set the owning side to null (unless already changed)
-            if ($panier->getProduit() === $this) {
-                $panier->setProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, LIEUDISPONIBILITE>
      */
-    public function getDisponibilite(): Collection
+    public function getLieudisponibilite(): Collection
     {
-        return $this->disponibilite;
+        return $this->lieudisponibilite;
     }
 
-    public function addDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    public function addLieudisponibilite(LIEUDISPONIBILITE $lieudisponibilite): static
     {
-        if (!$this->disponibilite->contains($disponibilite)) {
-            $this->disponibilite->add($disponibilite);
-            $disponibilite->setProduit($this);
+        if (!$this->lieudisponibilite->contains($lieudisponibilite)) {
+            $this->lieudisponibilite->add($lieudisponibilite);
+            $lieudisponibilite->setProduit($this);
         }
 
         return $this;
     }
 
-    public function removeDisponibilite(LIEUDISPONIBILITE $disponibilite): static
+    public function removeLieudisponibilite(LIEUDISPONIBILITE $lieudisponibilite): static
     {
-        if ($this->disponibilite->removeElement($disponibilite)) {
+        if ($this->lieudisponibilite->removeElement($lieudisponibilite)) {
             // set the owning side to null (unless already changed)
-            if ($disponibilite->getProduit() === $this) {
-                $disponibilite->setProduit(null);
+            if ($lieudisponibilite->getProduit() === $this) {
+                $lieudisponibilite->setProduit(null);
             }
         }
 
@@ -339,29 +222,29 @@ class PRODUIT
     }
 
     /**
-     * @return Collection<int, LIEUSTOCKAGE>
+     * @return Collection<int, LIEUENTREPOT>
      */
-    public function getStockage(): Collection
+    public function getLieuentrepot(): Collection
     {
-        return $this->stockage;
+        return $this->lieuentrepot;
     }
 
-    public function addStockage(LIEUSTOCKAGE $stockage): static
+    public function addLieuentrepot(LIEUENTREPOT $lieuentrepot): static
     {
-        if (!$this->stockage->contains($stockage)) {
-            $this->stockage->add($stockage);
-            $stockage->setProduit($this);
+        if (!$this->lieuentrepot->contains($lieuentrepot)) {
+            $this->lieuentrepot->add($lieuentrepot);
+            $lieuentrepot->setProduit($this);
         }
 
         return $this;
     }
 
-    public function removeStockage(LIEUSTOCKAGE $stockage): static
+    public function removeLieuentrepot(LIEUENTREPOT $lieuentrepot): static
     {
-        if ($this->stockage->removeElement($stockage)) {
+        if ($this->lieuentrepot->removeElement($lieuentrepot)) {
             // set the owning side to null (unless already changed)
-            if ($stockage->getProduit() === $this) {
-                $stockage->setProduit(null);
+            if ($lieuentrepot->getProduit() === $this) {
+                $lieuentrepot->setProduit(null);
             }
         }
 

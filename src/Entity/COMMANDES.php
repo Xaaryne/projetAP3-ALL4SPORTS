@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité servant à gérer les commandes et est liée à PANIER et à CLIENT*/ 
 #[ORM\Entity(repositoryClass: COMMANDESRepository::class)]
 class COMMANDES
 {
@@ -20,25 +19,21 @@ class COMMANDES
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\Column]
+    private ?float $prixtotal = null;
 
     #[ORM\Column(length: 55)]
     private ?string $etat = null;
 
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: PANIER::class)]
+    private Collection $panier;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_commandes')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?CLIENT $fk_client = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?float $prixtotal = null;
-
-    #[ORM\OneToMany(mappedBy: 'commandes', targetEntity: PANIER::class)]
-    private Collection $paniers;
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?CLIENT $client = null;
 
     public function __construct()
     {
-        $this->fk_panier = new ArrayCollection();
-        $this->paniers = new ArrayCollection();
+        $this->panier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,6 +53,17 @@ class COMMANDES
         return $this;
     }
 
+    public function getPrixtotal(): ?float
+    {
+        return $this->prixtotal;
+    }
+
+    public function setPrixtotal(float $prixtotal): static
+    {
+        $this->prixtotal = $prixtotal;
+
+        return $this;
+    }
 
     public function getEtat(): ?string
     {
@@ -72,66 +78,18 @@ class COMMANDES
     }
 
     /**
-     * @return Collection<int, CLIENT>
-     */
-
-    /**
      * @return Collection<int, PANIER>
      */
-    public function getFkPanier(): Collection
+    public function getPanier(): Collection
     {
-        return $this->fk_panier;
-    }
-
-    public function addFkPanier(PANIER $fkPanier): static
-    {
-        if (!$this->fk_panier->contains($fkPanier)) {
-            $this->fk_panier->add($fkPanier);
-            $fkPanier->setFkCommandes($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkPanier(PANIER $fkPanier): static
-    {
-        if ($this->fk_panier->removeElement($fkPanier)) {
-            // set the owning side to null (unless already changed)
-            if ($fkPanier->getFkCommandes() === $this) {
-                $fkPanier->setFkCommandes(null);
-            }
-        }
-
-        return $this;
-    }
-
-
-
-    public function getPrixtotal(): ?float
-    {
-        return $this->prixtotal;
-    }
-
-    public function setPrixtotal(?float $prixtotal): static
-    {
-        $this->prixtotal = $prixtotal;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, PANIER>
-     */
-    public function getPaniers(): Collection
-    {
-        return $this->paniers;
+        return $this->panier;
     }
 
     public function addPanier(PANIER $panier): static
     {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers->add($panier);
-            $panier->setCommandes($this);
+        if (!$this->panier->contains($panier)) {
+            $this->panier->add($panier);
+            $panier->setCommande($this);
         }
 
         return $this;
@@ -139,12 +97,24 @@ class COMMANDES
 
     public function removePanier(PANIER $panier): static
     {
-        if ($this->paniers->removeElement($panier)) {
+        if ($this->panier->removeElement($panier)) {
             // set the owning side to null (unless already changed)
-            if ($panier->getCommandes() === $this) {
-                $panier->setCommandes(null);
+            if ($panier->getCommande() === $this) {
+                $panier->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClient(): ?CLIENT
+    {
+        return $this->client;
+    }
+
+    public function setClient(?CLIENT $client): static
+    {
+        $this->client = $client;
 
         return $this;
     }

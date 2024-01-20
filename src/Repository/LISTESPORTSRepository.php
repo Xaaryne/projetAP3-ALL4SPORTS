@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\LIEUSTOCKAGE;
+use App\Entity\LISTESPORTS;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<LIEUSTOCKAGE>
+ * @extends ServiceEntityRepository<LISTESPORTS>
  *
- * @method LIEUSTOCKAGE|null find($id, $lockMode = null, $lockVersion = null)
- * @method LIEUSTOCKAGE|null findOneBy(array $criteria, array $orderBy = null)
- * @method LIEUSTOCKAGE[]    findAll()
- * @method LIEUSTOCKAGE[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method LISTESPORTS|null find($id, $lockMode = null, $lockVersion = null)
+ * @method LISTESPORTS|null findOneBy(array $criteria, array $orderBy = null)
+ * @method LISTESPORTS[]    findAll()
+ * @method LISTESPORTS[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LIEUSTOCKAGERepository extends ServiceEntityRepository
+class LISTESPORTSRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, LIEUSTOCKAGE::class);
+        parent::__construct($registry, LISTESPORTS::class);
     }
 
 //    /**
-//     * @return LIEUSTOCKAGE[] Returns an array of LIEUSTOCKAGE objects
+//     * @return LISTESPORTS[] Returns an array of LISTESPORTS objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class LIEUSTOCKAGERepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?LIEUSTOCKAGE
+//    public function findOneBySomeField($value): ?LISTESPORTS
 //    {
 //        return $this->createQueryBuilder('l')
 //            ->andWhere('l.exampleField = :val')
