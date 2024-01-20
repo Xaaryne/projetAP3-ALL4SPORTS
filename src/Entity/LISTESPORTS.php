@@ -24,9 +24,13 @@ class LISTESPORTS
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $photos = null;
 
+    #[ORM\OneToMany(mappedBy: 'listesports', targetEntity: CLIENTSPORTS::class)]
+    private Collection $clientsports;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->clientsports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -84,6 +88,36 @@ class LISTESPORTS
     public function setPhotos(?string $photos): static
     {
         $this->photos = $photos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CLIENTSPORTS>
+     */
+    public function getClientsports(): Collection
+    {
+        return $this->clientsports;
+    }
+
+    public function addClientsport(CLIENTSPORTS $clientsport): static
+    {
+        if (!$this->clientsports->contains($clientsport)) {
+            $this->clientsports->add($clientsport);
+            $clientsport->setListesports($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientsport(CLIENTSPORTS $clientsport): static
+    {
+        if ($this->clientsports->removeElement($clientsport)) {
+            // set the owning side to null (unless already changed)
+            if ($clientsport->getListesports() === $this) {
+                $clientsport->setListesports(null);
+            }
+        }
 
         return $this;
     }

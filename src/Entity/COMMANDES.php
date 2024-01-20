@@ -28,6 +28,9 @@ class COMMANDES
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: PANIER::class)]
     private Collection $panier;
 
+    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    private ?CLIENT $client = null;
+
     public function __construct()
     {
         $this->panier = new ArrayCollection();
@@ -100,6 +103,18 @@ class COMMANDES
                 $panier->setCommande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getClient(): ?CLIENT
+    {
+        return $this->client;
+    }
+
+    public function setClient(?CLIENT $client): static
+    {
+        $this->client = $client;
 
         return $this;
     }
