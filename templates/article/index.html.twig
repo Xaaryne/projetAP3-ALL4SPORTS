@@ -17,7 +17,7 @@
     <div class="text-article" style="float:left">
         {% for PRODUIT in produit %}
             {% if PRODUIT.id == id%}
-                <h1>{{PRODUIT.nomproduit}}</h1>
+                <h1>{{PRODUIT.nom}}</h1>
                 <h2>Description :{{PRODUIT.description}}</h2>
                 <h2>Prix :{{PRODUIT.prix}} €</h2>
                 <h3>Reférence : {{PRODUIT.reference}} </h3>

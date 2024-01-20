@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\PHOTOSPRODUITRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité représentant les photos de produit chaque entrée est un lien vers une images 
-dans public/images/produit elle est liée à PRODUIT*/
 #[ORM\Entity(repositoryClass: PHOTOSPRODUITRepository::class)]
 class PHOTOSPRODUIT
 {
@@ -15,7 +13,7 @@ class PHOTOSPRODUIT
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $photos = null;
 
     #[ORM\ManyToOne(inversedBy: 'photos')]

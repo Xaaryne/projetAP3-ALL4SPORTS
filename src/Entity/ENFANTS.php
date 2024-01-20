@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ENFANTSRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité servant à gérer les enfants des utilisateurs elle est liée à l'entité CLIENT*/ 
 #[ORM\Entity(repositoryClass: ENFANTSRepository::class)]
 class ENFANTS
 {
@@ -17,9 +16,8 @@ class ENFANTS
     #[ORM\Column]
     private ?int $age = null;
 
-    #[ORM\ManyToOne(inversedBy: 'fk_enfants')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?CLIENT $fk_client = null;
+    #[ORM\ManyToOne(inversedBy: 'enfants')]
+    private ?CLIENT $client = null;
 
     public function getId(): ?int
     {
@@ -38,14 +36,14 @@ class ENFANTS
         return $this;
     }
 
-    public function getFkClient(): ?CLIENT
+    public function getClient(): ?CLIENT
     {
-        return $this->fk_client;
+        return $this->client;
     }
 
-    public function setFkClient(?CLIENT $fk_client): static
+    public function setClient(?CLIENT $client): static
     {
-        $this->fk_client = $fk_client;
+        $this->client = $client;
 
         return $this;
     }

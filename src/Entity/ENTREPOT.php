@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité servant à gérer les entrepots*/
 #[ORM\Entity(repositoryClass: ENTREPOTRepository::class)]
 class ENTREPOT
 {
@@ -16,21 +15,16 @@ class ENTREPOT
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 55)]
+    #[ORM\Column(length: 125)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'fk_entrepot', targetEntity: LIEUSTOCKAGE::class)]
-    private Collection $fk_lieustockage;
-
-    #[ORM\OneToMany(mappedBy: 'entrepot', targetEntity: LIEUSTOCKAGE::class)]
-    private Collection $stockage;
+    #[ORM\OneToMany(mappedBy: 'entrepot', targetEntity: LIEUENTREPOT::class)]
+    private Collection $lieuentrepot;
 
     public function __construct()
     {
-        $this->fk_lieustockage = new ArrayCollection();
-        $this->stockage = new ArrayCollection();
+        $this->lieuentrepot = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -49,64 +43,30 @@ class ENTREPOT
         return $this;
     }
 
-    public function getFkLieustockage(): ?LIEUSTOCKAGE
-    {
-        return $this->fk_lieustockage;
-    }
-
-    public function setFkLieustockage(?LIEUSTOCKAGE $fk_lieustockage): static
-    {
-        $this->fk_lieustockage = $fk_lieustockage;
-
-        return $this;
-    }
-
-    public function addFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
-    {
-        if (!$this->fk_lieustockage->contains($fkLieustockage)) {
-            $this->fk_lieustockage->add($fkLieustockage);
-            $fkLieustockage->setFkEntrepot($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFkLieustockage(LIEUSTOCKAGE $fkLieustockage): static
-    {
-        if ($this->fk_lieustockage->removeElement($fkLieustockage)) {
-            // set the owning side to null (unless already changed)
-            if ($fkLieustockage->getFkEntrepot() === $this) {
-                $fkLieustockage->setFkEntrepot(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, LIEUSTOCKAGE>
+     * @return Collection<int, LIEUENTREPOT>
      */
-    public function getStockage(): Collection
+    public function getLieuentrepot(): Collection
     {
-        return $this->stockage;
+        return $this->lieuentrepot;
     }
 
-    public function addStockage(LIEUSTOCKAGE $stockage): static
+    public function addLieuentrepot(LIEUENTREPOT $lieuentrepot): static
     {
-        if (!$this->stockage->contains($stockage)) {
-            $this->stockage->add($stockage);
-            $stockage->setEntrepot($this);
+        if (!$this->lieuentrepot->contains($lieuentrepot)) {
+            $this->lieuentrepot->add($lieuentrepot);
+            $lieuentrepot->setEntrepot($this);
         }
 
         return $this;
     }
 
-    public function removeStockage(LIEUSTOCKAGE $stockage): static
+    public function removeLieuentrepot(LIEUENTREPOT $lieuentrepot): static
     {
-        if ($this->stockage->removeElement($stockage)) {
+        if ($this->lieuentrepot->removeElement($lieuentrepot)) {
             // set the owning side to null (unless already changed)
-            if ($stockage->getEntrepot() === $this) {
-                $stockage->setEntrepot(null);
+            if ($lieuentrepot->getEntrepot() === $this) {
+                $lieuentrepot->setEntrepot(null);
             }
         }
 

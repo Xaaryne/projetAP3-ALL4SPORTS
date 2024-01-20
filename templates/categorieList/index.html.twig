@@ -12,7 +12,7 @@
     <h1>liste des produit dans la catégorie : {{sport}}</h1>
     <div>
         {% for PRODUIT in produit %}
-            {% if PRODUIT.listesport.id == id%}
+            {% if PRODUIT.sport.id == id%}
 
                 {% for PHOTOS in photos %}
                     {% if PHOTOS.produit.id == PRODUIT.id %}
@@ -22,7 +22,7 @@
                         <a>
                         <br>
                         <div class ="nomproduit">
-                            <p1>{{PRODUIT.nomproduit}}</p1>
+                            <p1>{{PRODUIT.nom}}</p1>
                         </div>
                     </div>
                     {% endif %} 

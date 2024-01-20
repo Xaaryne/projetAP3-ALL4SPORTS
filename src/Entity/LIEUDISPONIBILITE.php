@@ -3,11 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LIEUDISPONIBILITERepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité servant à faire le lien entre le produit et les magasins, elle est liée à ces deux entités*/
 #[ORM\Entity(repositoryClass: LIEUDISPONIBILITERepository::class)]
 class LIEUDISPONIBILITE
 {
@@ -16,21 +13,18 @@ class LIEUDISPONIBILITE
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $quantite = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $rayon = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $etagere = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $etage = null;
-
-    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
-    private ?PRODUIT $produit = null;
-
-    #[ORM\ManyToOne(inversedBy: 'disponibilite')]
+    #[ORM\ManyToOne(inversedBy: 'lieudisponibilite')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?MAGASIN $magasin = null;
+
+    #[ORM\ManyToOne(inversedBy: 'lieudisponibilite')]
+    private ?PRODUIT $produit = null;
 
     public function getId(): ?int
     {
@@ -42,54 +36,21 @@ class LIEUDISPONIBILITE
         return $this->quantite;
     }
 
-    public function setQuantite(int $quantite): static
+    public function setQuantite(?int $quantite): static
     {
         $this->quantite = $quantite;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, PRODUIT>
-     */
-
-
-    /**
-     * @return Collection<int, MAGASIN>
-     */
-
-    public function getEtagere(): ?string
+    public function getRayon(): ?string
     {
-        return $this->etagere;
+        return $this->rayon;
     }
 
-    public function setEtagere(?string $etagere): static
+    public function setRayon(?string $rayon): static
     {
-        $this->etagere = $etagere;
-
-        return $this;
-    }
-
-    public function getEtage(): ?int
-    {
-        return $this->etage;
-    }
-
-    public function setEtage(?int $etage): static
-    {
-        $this->etage = $etage;
-
-        return $this;
-    }
-
-    public function getProduit(): ?PRODUIT
-    {
-        return $this->produit;
-    }
-
-    public function setProduit(?PRODUIT $produit): static
-    {
-        $this->produit = $produit;
+        $this->rayon = $rayon;
 
         return $this;
     }
@@ -102,6 +63,18 @@ class LIEUDISPONIBILITE
     public function setMagasin(?MAGASIN $magasin): static
     {
         $this->magasin = $magasin;
+
+        return $this;
+    }
+
+    public function getProduit(): ?PRODUIT
+    {
+        return $this->produit;
+    }
+
+    public function setProduit(?PRODUIT $produit): static
+    {
+        $this->produit = $produit;
 
         return $this;
     }

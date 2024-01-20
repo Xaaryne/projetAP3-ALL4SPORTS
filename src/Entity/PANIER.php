@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\PANIERRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/*Entité représentant les paniers, elle est liée à COMMANDE et à PRODUIT, 
-il peut avoir plusieur entrée/produit liée à une seule commande*/ 
 #[ORM\Entity(repositoryClass: PANIERRepository::class)]
 class PANIER
 {
@@ -16,18 +14,33 @@ class PANIER
     private ?int $id = null;
 
     #[ORM\Column]
+    private ?int $état = null;
+
+    #[ORM\Column]
     private ?int $quantite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'paniers')]
-    private ?COMMANDES $commandes = null;
-
     #[ORM\ManyToOne(inversedBy: 'panier')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?PRODUIT $produit = null;
 
+    #[ORM\ManyToOne(inversedBy: 'panier')]
+    private ?COMMANDES $commande = null;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getétat(): ?int
+    {
+        return $this->état;
+    }
+
+    public function setétat(int $état): static
+    {
+        $this->état = $état;
+
+        return $this;
     }
 
     public function getQuantite(): ?int
@@ -42,18 +55,6 @@ class PANIER
         return $this;
     }
 
-    public function getCommandes(): ?COMMANDES
-    {
-        return $this->commandes;
-    }
-
-    public function setCommandes(?COMMANDES $commandes): static
-    {
-        $this->commandes = $commandes;
-
-        return $this;
-    }
-
     public function getProduit(): ?PRODUIT
     {
         return $this->produit;
@@ -62,6 +63,18 @@ class PANIER
     public function setProduit(?PRODUIT $produit): static
     {
         $this->produit = $produit;
+
+        return $this;
+    }
+
+    public function getCommande(): ?COMMANDES
+    {
+        return $this->commande;
+    }
+
+    public function setCommande(?COMMANDES $commande): static
+    {
+        $this->commande = $commande;
 
         return $this;
     }

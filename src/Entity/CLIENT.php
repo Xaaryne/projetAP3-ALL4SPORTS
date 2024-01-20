@@ -7,15 +7,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-/*Entité représentant les utilisateurs, client comme administrateur */
 #[ORM\Entity(repositoryClass: CLIENTRepository::class)]
-class CLIENT
+class CLIENT implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private array $roles = [];
 
     #[ORM\Column(length: 55)]
     private ?string $nom = null;
@@ -23,42 +29,87 @@ class CLIENT
     #[ORM\Column(length: 55)]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 60)]
-    private ?string $mail = null;
-
-    #[ORM\Column(length: 11)]
+    #[ORM\Column(length: 11, nullable: true)]
     private ?string $telephone = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_naissance = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $datenaissance = null;
+
+    #[ORM\Column]
+    private ?int $nbenfants = null;
 
     #[ORM\Column(length: 11)]
     private ?string $code = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $nb_enfant = null;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: ENFANTS::class)]
+    private Collection $enfants;
 
-    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: ENFANTS::class, orphanRemoval: true)]
-    private Collection $fk_enfants;
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: CLIENTSPORTS::class)]
+    private Collection $clientsport;
 
-    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: CLIENTSPORT::class, orphanRemoval: true)]
-    private Collection $fk_clientsport;
-
-    #[ORM\OneToMany(mappedBy: 'fk_client', targetEntity: COMMANDES::class)]
-    private Collection $fk_commandes;
-
-
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: COMMANDES::class)]
+    private Collection $commandes;
 
     public function __construct()
     {
-        $this->fk_enfants = new ArrayCollection();
-        $this->fk_clientsport = new ArrayCollection();
-        $this->fk_commandes = new ArrayCollection();
+        $this->enfants = new ArrayCollection();
+        $this->clientsport = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 
     public function getNom(): ?string
@@ -85,38 +136,38 @@ class CLIENT
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): static
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
     public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): static
+    public function setTelephone(?string $telephone): static
     {
         $this->telephone = $telephone;
 
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDatenaissance(): ?\DateTimeInterface
     {
-        return $this->date_naissance;
+        return $this->datenaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $date_naissance): static
+    public function setDatenaissance(?\DateTimeInterface $datenaissance): static
     {
-        $this->date_naissance = $date_naissance;
+        $this->datenaissance = $datenaissance;
+
+        return $this;
+    }
+
+    public function getNbenfants(): ?int
+    {
+        return $this->nbenfants;
+    }
+
+    public function setNbenfants(int $nbenfants): static
+    {
+        $this->nbenfants = $nbenfants;
 
         return $this;
     }
@@ -133,42 +184,30 @@ class CLIENT
         return $this;
     }
 
-    public function getNbEnfant(): ?int
-    {
-        return $this->nb_enfant;
-    }
-
-    public function setNbEnfant(?int $nb_enfant): static
-    {
-        $this->nb_enfant = $nb_enfant;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, ENFANTS>
      */
-    public function getFkEnfants(): Collection
+    public function getEnfants(): Collection
     {
-        return $this->fk_enfants;
+        return $this->enfants;
     }
 
-    public function addFkEnfant(ENFANTS $fkEnfant): static
+    public function addEnfant(ENFANTS $enfant): static
     {
-        if (!$this->fk_enfants->contains($fkEnfant)) {
-            $this->fk_enfants->add($fkEnfant);
-            $fkEnfant->setFkClient($this);
+        if (!$this->enfants->contains($enfant)) {
+            $this->enfants->add($enfant);
+            $enfant->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeFkEnfant(ENFANTS $fkEnfant): static
+    public function removeEnfant(ENFANTS $enfant): static
     {
-        if ($this->fk_enfants->removeElement($fkEnfant)) {
+        if ($this->enfants->removeElement($enfant)) {
             // set the owning side to null (unless already changed)
-            if ($fkEnfant->getFkClient() === $this) {
-                $fkEnfant->setFkClient(null);
+            if ($enfant->getClient() === $this) {
+                $enfant->setClient(null);
             }
         }
 
@@ -176,43 +215,31 @@ class CLIENT
     }
 
     /**
-     * @return Collection<int, CLIENTSPORT>
+     * @return Collection<int, CLIENTSPORTS>
      */
-    public function getFkClientsport(): Collection
+    public function getClientsport(): Collection
     {
-        return $this->fk_clientsport;
+        return $this->clientsport;
     }
 
-    public function addFkClientsport(CLIENTSPORT $fkClientsport): static
+    public function addClientsport(CLIENTSPORTS $clientsport): static
     {
-        if (!$this->fk_clientsport->contains($fkClientsport)) {
-            $this->fk_clientsport->add($fkClientsport);
-            $fkClientsport->setFkClient($this);
+        if (!$this->clientsport->contains($clientsport)) {
+            $this->clientsport->add($clientsport);
+            $clientsport->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeFkClientsport(CLIENTSPORT $fkClientsport): static
+    public function removeClientsport(CLIENTSPORTS $clientsport): static
     {
-        if ($this->fk_clientsport->removeElement($fkClientsport)) {
+        if ($this->clientsport->removeElement($clientsport)) {
             // set the owning side to null (unless already changed)
-            if ($fkClientsport->getFkClient() === $this) {
-                $fkClientsport->setFkClient(null);
+            if ($clientsport->getClient() === $this) {
+                $clientsport->setClient(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getFkCommande(): ?COMMANDES
-    {
-        return $this->fk_commande;
-    }
-
-    public function setFkCommande(?COMMANDES $fk_commande): static
-    {
-        $this->fk_commande = $fk_commande;
 
         return $this;
     }
@@ -220,27 +247,27 @@ class CLIENT
     /**
      * @return Collection<int, COMMANDES>
      */
-    public function getFkCommandes(): Collection
+    public function getCommandes(): Collection
     {
-        return $this->fk_commandes;
+        return $this->commandes;
     }
 
-    public function addFkCommande(COMMANDES $fkCommande): static
+    public function addCommande(COMMANDES $commande): static
     {
-        if (!$this->fk_commandes->contains($fkCommande)) {
-            $this->fk_commandes->add($fkCommande);
-            $fkCommande->setFkClient($this);
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeFkCommande(COMMANDES $fkCommande): static
+    public function removeCommande(COMMANDES $commande): static
     {
-        if ($this->fk_commandes->removeElement($fkCommande)) {
+        if ($this->commandes->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($fkCommande->getFkClient() === $this) {
-                $fkCommande->setFkClient(null);
+            if ($commande->getClient() === $this) {
+                $commande->setClient(null);
             }
         }
 
