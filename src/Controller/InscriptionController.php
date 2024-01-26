@@ -23,27 +23,41 @@ class InscriptionController extends AbstractController
     #[Route('/createutilisateur', name: 'app_createutilisateur')]
     public function createutilisateur(Request $request,EntityManagerInterface $entityManager,CLIENTRepository $clientrepository): Response
     {
+
+//Récupération du form de la page d'inscription 
+
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
         $password = $_POST['password'];
         $email = $_POST['email'];
 
+//Création du nouveau utilisateur
         $newutilisateur = new CLIENT();
         $newutilisateur -> setNom($nom);
         $newutilisateur -> setPrenom($nom);
         $newutilisateur -> setEmail($email);
         $newutilisateur -> setPassword($password);
         $newutilisateur -> setRoles(0);
-        $newutilisateur -> setCode("test");
         $newutilisateur -> setNbenfants(0);
 
+        $clients = $clientrepository->findAll();
+        $code = codeUtilisateur();
+        $newutilisateur -> setCode($code);
+
+//Mise à jour de la bdd
         $entityManager->persist($newutilisateur);
-
-
         $entityManager->flush();
 
         return $this->render('inscription/postInscription.html.twig', [
             'controller_name' => 'InscriptionController',
         ]);
+    }
+
+    /*Une fonction qui permet de créer un code client*/ 
+    public function codeUtilisateur(){
+        $random =  mt_rand(10000000, 99999999);
+        $code = "CLI" . $random;
+
+        return $code;
     }
 }
