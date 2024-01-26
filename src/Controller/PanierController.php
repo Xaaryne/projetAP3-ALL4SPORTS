@@ -47,6 +47,7 @@ class PanierController extends AbstractController
         $newpanier = new PANIER();
         $newpanier ->setQuantite($quantite);
         $newpanier ->setProduit($produit);
+        $newpanier ->setétat(1);
 
 
 //Création de la commande s
