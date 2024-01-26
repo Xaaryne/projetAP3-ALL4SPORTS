@@ -21,7 +21,7 @@ class CLIENT implements UserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private ?int $roles = null;
 
     #[ORM\Column(length: 55)]
     private ?string $nom = null;
@@ -49,6 +49,9 @@ class CLIENT implements UserInterface
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: COMMANDES::class)]
     private Collection $commandes;
+
+    #[ORM\Column(length: 35)]
+    private ?string $password = null;
 
     public function __construct()
     {
@@ -89,14 +92,10 @@ class CLIENT implements UserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        return $this -> roles;
     }
 
-    public function setRoles(array $roles): static
+    public function setRoles(int $roles): static
     {
         $this->roles = $roles;
 
@@ -270,6 +269,18 @@ class CLIENT implements UserInterface
                 $commande->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
 
         return $this;
     }

@@ -11,10 +11,14 @@
 <div class="example-wrapper">
 
 <h1>CREER UN COMPTE</h1>
-
+<form method="post" action="/createutilisateur">
 <div class="form-example">
-    <label for="name">Pseudo: </label>
-    <input type="text" name="pseudo" id="pseudo" required />
+    <label for="name">nom: </label>
+    <input type="text" name="nom" id="nom" required />
+  </div>
+  <div class="form-example">
+    <label for="name">prenom: </label>
+    <input type="text" name="prenom" id="prenom" required />
   </div>
   <div class="form-example">
     <label for="email">Mot de passe: </label>
@@ -27,10 +31,6 @@
   <div class="form-example">
     <input type="submit" value="Connexion" />
   </div>
-</form>
-        <a href="connexion">
-            <li>Deja un Compte?</li>
-        </a>
-    
+</form> 
 </div>
 {% endblock %}
